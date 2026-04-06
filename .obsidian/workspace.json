@@ -1,0 +1,206 @@
+{
+  "main": {
+    "id": "c9f53121965113d5",
+    "type": "split",
+    "children": [
+      {
+        "id": "1cef81180e6b95f4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "960beaf77173cbd0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/sdlc/Technology Decisions.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Technology Decisions"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d8773fe2771b11a7",
+    "type": "split",
+    "children": [
+      {
+        "id": "d8836ee2dfa6f12a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "03c2bb00525d47ab",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "5724c63487dafb29",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "2fef4bffad663e1f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "3b04af6528bc47f8",
+    "type": "split",
+    "children": [
+      {
+        "id": "70a3b269766a60db",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ccd8691d9c43ece0",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "87194b193dec8741",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "198b812c9f0816aa",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "652bffb08e4878d5",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "d975f42ce89ed789",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "960beaf77173cbd0",
+  "lastOpenFiles": [
+    "docs/learning/THE_ACCELERATOR.md",
+    "docs/learning/2_AI_ACCELERATION.md",
+    "docs/learning/1_TECHNOLOGY_GOD.md",
+    "docs/learning/AI_IN_SDLC.md",
+    "docs/learning/THE_DESTINATION.md",
+    "docs/learning/LEARNING_GOAL.md",
+    "docs/sdlc/Technology Decisions.md",
+    "docs/sdlc/SDD.md",
+    "README.md",
+    "Technology Decisions.md",
+    "docs/sdlc/PRD.md",
+    "docs/sdlc/BRD.md",
+    "docs/learning",
+    "docs/sdlc",
+    "docs",
+    "LEARNING_GOAL.md",
+    "BRD.md",
+    "AI_IN_SDLC.md",
+    "LEARNING_GOAL.md.tmp.7768.1775453025744",
+    "PRD.md"
+  ]
+}

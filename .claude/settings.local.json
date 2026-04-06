@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv LEARNING_GOAL.md docs/learning/)",
+      "Bash(mv AI_IN_SDLC.md docs/learning/)",
+      "Bash(mv BRD.md docs/sdlc/)",
+      "Bash(mv PRD.md docs/sdlc/)",
+      "Bash(mv SDD.md docs/sdlc/)",
+      "Bash(git mv:*)",
+      "Bash(mv \"docs/learning/LEARNING_GOAL.md\" \"docs/learning/THE_DESTINATION.md\")",
+      "Bash(mv \"docs/learning/AI_IN_SDLC.md\" \"docs/learning/THE_ACCELERATOR.md\")",
+      "Bash(mv \"docs/learning/THE_DESTINATION.md\" \"docs/learning/1_TECHNOLOGY_GOD.md\")",
+      "Bash(mv \"docs/learning/THE_ACCELERATOR.md\" \"docs/learning/2_AI_ACCELERATION.md\")"
+    ]
+  }
+}
