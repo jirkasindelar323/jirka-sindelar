@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/sdlc/Technology Decisions.md",
+                "file": "docs/learning/3_AGENTIC_DESIGN.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Technology Decisions"
+              "title": "3_AGENTIC_DESIGN"
             }
           }
         ]
@@ -182,18 +182,19 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "README.md",
+    "docs/sdlc/Technology Decisions.md",
+    "docs/learning/3_AGENTIC_DESIGN.md",
+    "docs/sdlc/BRD.md",
+    "docs/sdlc/PRD.md",
     "docs/learning/1_TECHNOLOGY_GOD.md",
     "docs/learning/2_AI_ACCELERATION.md",
-    "docs/sdlc/Technology Decisions.md",
     "docs/learning/THE_ACCELERATOR.md",
     "docs/learning/AI_IN_SDLC.md",
     "docs/learning/THE_DESTINATION.md",
     "docs/learning/LEARNING_GOAL.md",
     "docs/sdlc/SDD.md",
-    "README.md",
     "Technology Decisions.md",
-    "docs/sdlc/PRD.md",
-    "docs/sdlc/BRD.md",
     "docs/learning",
     "docs/sdlc",
     "docs",

@@ -266,6 +266,8 @@ This is where we talk before you decide. Some questions to consider:
 
 - **Would you rather ship the website fast and learn from building it, or learn deeply from the architecture even if it takes longer?** SSG is the fastest path to a live site. SSR or MPA would teach you more architecture but take longer and add complexity.
 
+- **Agent-friendliness (NFR-9) and future AI features (NFR-8).** The BRD now includes a future direction toward agent-consumable content and potentially an interactive AI feature. For v1, agent-friendliness is mostly about structured markup (works with any rendering strategy). But the future AI feature strengthens the case for a stack where adding API routes is a natural extension — not a rewrite.
+
 **There is no recommendation here.** All five options are legitimate. Your BRD/PRD constraints point toward SSG or Hybrid as the most practical fit for the website itself — but "practical fit" is not your only criterion. If learning full-stack architecture or AWS infrastructure matters more to you than shipping the simplest possible v1, that's a valid and intelligent reason to choose differently.
 
 ### Decision

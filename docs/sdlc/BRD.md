@@ -55,7 +55,7 @@ The site's primary business outcome is retention, so KPIs lean toward engagement
 
 - **Bio / personal story** — narrative "about me" covering who Jirka is, how he got here, and what he cares about.
 - **Portfolio of work** — selected projects, case studies, or work samples with short writeups.
-- **Blog / thoughts** — long-form writing area; the primary driver of return visits and the retention KPI.
+- **Blog / thoughts** — long-form writing area; the primary driver of return visits and the retention KPI. Content includes not just project writeups but **builder thinking** — Jirka's perspectives on technology, agentic design, AI as augmented intelligence, and how the craft of building software is changing. This type of content is what makes the site distinctive: it demonstrates the "interesting guy" impression through how Jirka thinks, not just what he's built.
 - **Humor & easter eggs** — jokes, games, hidden surprises; the personality layer explicitly called out in the Vision.
 - **Contact mechanism** — clear links to LinkedIn/GitHub.
 - **CV / resume download** — downloadable PDF for recruiters who want to forward it.
@@ -66,6 +66,11 @@ The site's primary business outcome is retention, so KPIs lean toward engagement
 
 - **User accounts / login** — no authentication, no profiles; the site is fully public and stateless.
 - **Payments / monetization** — no Stripe, donations, or paid content. This is a permanent exclusion, not a v1 deferral: the site will never carry monetization features. Any future "paid" relationship with Jirka happens outside the website.
+
+### Future direction (not v1, but informing architectural choices)
+
+- **Agent-friendly site.** As AI agents increasingly mediate how people discover and consume content (see [3_AGENTIC_DESIGN.md](../learning/3_AGENTIC_DESIGN.md)), the site should be consumable by agents — not just human visitors. In practice this means structured metadata and potentially a simple API endpoint that exposes content (bio, portfolio, blog posts) in a machine-readable format. This is low effort in v1 (structured HTML, good meta tags, semantic markup) with the option to add a dedicated JSON endpoint later. The site itself becomes a demonstration of the builder thinking Jirka writes about: if apps become APIs, a personal site should be agent-friendly too.
+- **Interactive AI features.** The site could eventually include a conversational element or AI-powered feature that demonstrates Jirka's understanding of agentic technology — not as a gimmick, but as evidence of builder capability. This is a v2+ consideration that informs the NFR-8 extendability requirement: the stack should accommodate a future backend with API routes.
 
 ## Risks & Assumptions
 
