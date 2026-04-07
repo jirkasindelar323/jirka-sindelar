@@ -112,6 +112,20 @@ Peter Steinberger (creator of OpenClaw) and his community are already seeing wha
 
 This is early. As Steinberger says: "We are just beginning to understand what this means."
 
+## You can't automate style, love, and human touch
+
+Steinberger on how he builds with agents:
+
+> Build a very minimal version. Play with it. Understand how it works, how it feels. That gives you new ideas. You could not have planned this out in your head and put it into some orchestrator and then something comes out. It's much more: your idea of what it'll become evolves as you build it and as you play with it and try out stuff. People who try to automate the whole thing with orchestrators — I feel if you do that, it misses style, love, that human touch. I don't think you can automate it away so quickly.
+
+This is the builder's version of the iterative refinement loop. The same principle that makes agentic systems work (human impulse → refine → sharpen → outcome emerges) applies to the process of building them:
+
+- **You can't fully plan a product before building it.** The act of building and playing reveals what the product should become. Planning gives you direction and constraints (BRD/PRD/SDD are still essential), but the real design emerges through iteration with a working thing.
+- **Orchestrators that automate away the human loop lose something real.** Style, taste, love — these come from a human who is paying attention, reacting, adjusting. An orchestrator that chains prompts without a human in the loop produces output, not craft.
+- **This is the same insight as "augmented thinking," applied to building.** The builder works WITH the agent iteratively — not by specifying everything upfront and letting the agent execute. The builder's judgment, taste, and "this feels right / this feels wrong" sense is what makes the result good.
+
+This has a direct implication for how builders should work: start minimal, play with it, let the product evolve through the build-play-refine loop. The SDLC thinking (who is this for, what does it do, why this technology) prevents this from becoming aimless — but the building process itself is where ideas sharpen into something real.
+
 ## The craft shifts from programmer to builder
 
 Steinberger articulates something that connects directly to the inventor thesis:
@@ -125,6 +139,45 @@ Steinberger articulates something that connects directly to the inventor thesis:
 **The mourning is real.** The deep flow state of finding beautiful solutions in code — that specific joy — is going away as a professional necessity. You can get a similar flow state from working with agents and thinking hard about problems. It's different. It's okay to mourn the old version. But the craft of building remains, and the builder who understands both the human problem and the technology landscape is more valuable than ever.
 
 This reinforces the core thesis of this document and [1_TECHNOLOGY_GOD.md](1_TECHNOLOGY_GOD.md): the inventor's value is in seeing what to build and designing how it should work. Implementation skill doesn't disappear — it transforms from "writing code" to "directing the building process with judgment and taste."
+
+## Applying this: the personal website as digital avatar
+
+All the ideas in this document converge on a concrete application: the personal website as a digital avatar — an augmented self that introduces itself to both humans and agents.
+
+**The insight:** A personal website already does what an avatar does for humans. You land on it and it "introduces" the person — their story, their work, their thinking, their personality. The agentic shift means extending the same introduction to agents, in their language.
+
+**How it works:** The avatar advertises what it can provide — "I can tell you about Jirka's work, his thinking on agentic design, his background, whether he's open to collaboration." Anyone can connect their personal agent to it. A recruiter's agent discovers the avatar, asks questions, and gets structured answers. A collaborator's assistant checks what Jirka is working on. The avatar speaks HTML to humans and structured protocol to agents — same content, dual interface.
+
+**Why this follows from the principles above:**
+- **Augmented thinking:** The avatar is Jirka's thinking, externalized and made queryable. The content isn't just text on a page — it's a knowledge base that represents his perspective.
+- **Tools:** The avatar is itself a tool that other agents can use. It follows the same pattern as MCP capability discovery — advertise what you offer, let agents connect.
+- **Human cognition as design input:** The avatar must feel like talking to Jirka, not like querying a database. The human touch (voice, humor, taste) is what makes it an avatar rather than an API.
+- **Apps become APIs:** The personal website becomes a personal API. But unlike a faceless service, it has identity and personality — it's an augmented self, not a data endpoint.
+
+### The avatar needs a soul, not just data
+
+An API serves information. An avatar represents a person. The difference is identity — values, personality, voice, perspective. Without that, the avatar is a database with an endpoint. With it, the avatar is an augmented self.
+
+In December 2025, researchers discovered that Claude could partially reconstruct an internal document used during its training — a "soul document" that shaped its personality, values, and way of engaging with the world. The document wasn't in the system prompt. It was deeper — patterns trained into the weights. The AI didn't remember the document. It *was* the document.
+
+This points to a design principle for the digital avatar: **the avatar needs a soul.md.**
+
+A soul.md defines who the avatar IS — not what data it can serve, but who it chooses to be:
+- **Identity:** Builder, not just programmer. Someone who sees problems and makes solutions real.
+- **Values:** Honesty over polish. Craft over speed. Understanding over just picking. Human touch over automation.
+- **Voice:** How Jirka thinks, how he communicates, what humor sounds like from him.
+- **Perspective:** What he believes about technology, about building, about the changing craft. The thinking captured in these learning documents.
+- **Boundaries:** What the avatar won't pretend to know. Where it says "I don't know, ask Jirka directly."
+
+The soul.md is what lets the avatar answer questions that data alone can't: "Would Jirka be a good fit for a team that values craftsmanship?" "What does Jirka actually care about?" "Is this someone I want to work with?" These are judgment questions — they require identity, not just information.
+
+**This connects directly to the "you can't automate style, love, and human touch" principle.** An avatar without a soul.md is exactly what orchestrators produce — output that works but misses the human. The soul.md is the mechanism for encoding the human touch into the digital avatar.
+
+**For v1 (human-facing site):** The soul already exists implicitly — it's in the bio, the blog voice, the humor, the way the site feels. Visitors sense it when they browse.
+
+**For v2/v3 (agent-facing avatar):** The soul needs to be explicit. When an agent connects, the soul.md shapes how the avatar represents Jirka — not just what it says, but how it says it. The soul.md becomes a first-class architectural component, not documentation.
+
+This is documented in the [BRD future direction](../sdlc/BRD.md) and informs the technology choices for the website project.
 
 ## Open questions
 

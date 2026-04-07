@@ -6,12 +6,15 @@
 
 **Product in one line.** A responsive static website that presents Jirka Sindelar's story, work, and writing in a voice that is distinctively his — built to be memorable, credible, and worth returning to.
 
+**Long-term direction.** The site evolves into Jirka's digital avatar — an augmented self that introduces itself to both humans and AI agents, advertises what it can provide, and lets anyone easily connect their agent to learn about Jirka's work, thinking, and interests. v1 serves humans with passively agent-readable structure; v2+ adds active agent capabilities. See [BRD future direction](BRD.md).
+
 **Primary use cases.** Use case #1 is the **main** scenario the site is designed for — the one that shapes every design and content decision. The remaining use cases are valid and supported, but secondary.
 
 1. **Tech-event follow-up (PRIMARY).** Jirka meets a fellow engineer at a conference, meetup, or industry event and either shows them the site directly on his phone or gives them the link to look up later. The visitor — likely on mobile, likely within minutes of a face-to-face conversation — scans the site for 30–60 seconds and walks away with an impression along the lines of *"that's an interesting guy"*. This is the use case that determines whether the site succeeds: it places heavy weight on mobile first-impression, clarity of the landing page, and the personality/humor layer. Every other use case is supported, but if a design trade-off forces a choice, this one wins.
 2. **Evaluate Jirka as a hire.** A recruiter or hiring manager lands on the site (usually via LinkedIn or a shared link), skims the bio and portfolio within a minute, forms a judgment, and either reaches out, downloads the CV to forward internally, or bookmarks the site for later.
 3. **Read Jirka's writing.** A peer engineer, collaborator, or return visitor comes for the blog — either a specific post that was shared with them, or to check what's new since their last visit. This is the retention loop the primary KPI depends on, and it's where a strong first impression from use case #1 converts into a returning reader.
 4. **Get in touch.** Any visitor who wants to contact Jirka finds a clear path to LinkedIn, GitHub, or email within seconds of looking for it.
+5. **Agent discovers Jirka (v2+, not v1).** Someone's personal AI agent — a recruiter's assistant, a collaborator's research agent, a conference organizer's tool — connects to the site, discovers what it can provide ("I can tell you about Jirka's work, his thinking on agentic design, his background, whether he's open to collaboration"), and queries it on behalf of its human. The site responds with structured data and content. In v1, this use case is partially served by structured HTML and JSON-LD (agents can passively read the site). In v2+, the site actively advertises capabilities and exposes dedicated endpoints.
 
 **Traceability note.** Throughout this document, user stories are numbered `US-n`, functional requirements `FR-n`, non-functional requirements `NFR-n`, and acceptance criteria `AC-n`. Each FR cites the US-IDs it serves; each AC cites the US-ID it proves.
 
@@ -32,11 +35,13 @@ Each story has a `US-n` ID, a primary audience (from the BRD's Target Audiences 
 | **US-9** | Recruiters | As a recruiter, I want to copy a shareable link that renders a good preview when pasted in Slack, LinkedIn, or email, so I can easily pass the site to a hiring manager. |
 | **US-10** | Both | As a visitor, I want to read a narrative bio that goes beyond a resume, so I can get a sense of who Jirka is as a person. |
 | **US-11** | Recruiters | As a recruiter, I want to form a judgment about Jirka's experience and quality of work in under a minute, so I can decide whether to reach out with a role. The site must surface enough signal — current role, seniority, selected work — near the top of the bio and portfolio that I don't have to dig. |
+| **US-12** *(v2+)* | AI Agents | As an AI agent acting on behalf of a human (recruiter, collaborator, researcher), I want to discover what the site can tell me about Jirka and query it in a structured format, so I can efficiently provide my human with relevant information about his work, thinking, and availability. |
 
-**Audience coverage check.** Both BRD audiences have dedicated stories:
+**Audience coverage check.** Both BRD audiences have dedicated stories, plus a future agent audience:
 - **Tech Industry People** (primary): US-5 ⭐, US-6, US-8.
 - **Recruiters**: US-1, US-9, US-11.
 - **Both audiences**: US-2, US-3, US-4, US-7, US-10.
+- **AI Agents** (v2+): US-12. In v1, partially served by NFR-9 (structured markup).
 
 ## Functional Requirements
 
@@ -72,7 +77,7 @@ Non-functional requirements describe *how well* the site must behave. They apply
 | **NFR-6 — Privacy: no personal data collection** | The site collects no personal data beyond aggregate, anonymized analytics. No forms that store visitor data server-side, no account creation (already out of scope per BRD). |
 | **NFR-7 — Maintainability** | Content (blog posts, portfolio entries, bio copy) must be editable without a CMS — directly in source files (markdown or similar) — so Jirka can publish a post or update the bio in a single commit. *(Directly mitigates the BRD "Jirka will keep writing" assumption: low friction means higher chance of continued content production.)* |
 | **NFR-8 — Future extendability** | v1 is a static site and ships as one. However, architectural decisions made in v1 must not foreclose the later addition of a backend (API routes, server-rendered pages, dynamic features). This is **not** backend-readiness: v1 must not introduce speculative abstractions, mock APIs, or database layers for features that don't exist. It **is** a constraint on stack and structure: choose technologies, frameworks, and file layouts that can later accommodate server-side code without a rewrite. Concretely — prefer a stack where adding an API route is a known, documented path (e.g. Next.js, Astro, SvelteKit) over a pure HTML/CSS site that would need to be re-platformed to gain a backend. Avoid hard-coding assumptions that only hold for a static site (build-time-only data fetching patterns that can't be swapped for runtime calls, routing that can't be extended, etc.). Specific future possibilities that inform this constraint: (a) an AI-powered interactive feature demonstrating builder capability, (b) a JSON API endpoint exposing site content for agent consumption (see BRD future direction). |
-| **NFR-9 — Agent-friendliness** | The site should be consumable by AI agents, not just human visitors. In v1 this means: semantic HTML structure, comprehensive Open Graph and structured data markup (JSON-LD or similar), and clean, crawlable content hierarchy. No dedicated API endpoint is required in v1, but the content structure should make adding one trivial. This is both a practical consideration (agents increasingly mediate content discovery) and a demonstration of the builder thinking the site's content advocates. |
+| **NFR-9 — Agent-friendliness** | The site should be consumable by AI agents, not just human visitors. In v1 this means: semantic HTML structure, comprehensive Open Graph and structured data markup (JSON-LD or similar), and clean, crawlable content hierarchy. No dedicated API endpoint is required in v1, but the content structure should make adding one trivial. This is the v1 foundation for the BRD's digital avatar vision — the site evolves toward actively advertising its capabilities and exposing structured endpoints for agent consumption (US-12, v2+). In v1, agents can passively read the structured HTML; in v2+, the site becomes a self-describing service following patterns like MCP (Model Context Protocol) capability discovery. |
 
 ## Acceptance Criteria
 

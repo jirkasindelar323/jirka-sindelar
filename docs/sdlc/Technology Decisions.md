@@ -34,268 +34,387 @@ For each decision point:
 
 ## DP-1: Rendering Strategy
 
-### What needs to be decided
-
 When a visitor types the URL into their browser, **how does the site turn into the page they see?** This is the most fundamental architectural decision — everything else (framework, hosting, infrastructure complexity, cost, performance, security) follows from it.
 
-### Why it matters
-
-From the BRD and PRD, these constraints shape the decision:
-
-- **Primary use case (US-5):** Someone at a tech event pulls up the site on their phone. The page must load **fast** — a slow site kills the "interesting guy" impression in seconds.
-- **NFR-1 (Performance):** Site must feel instant.
-- **NFR-8 (Extendability):** v1 must not foreclose adding a backend later. But v1 itself has no dynamic features (no accounts, no comments, no personalization, no forms that store data).
-- **BRD over-engineering risk:** Simpler is better for v1 — don't add complexity that doesn't serve a current requirement.
-- **Content type:** All content (bio, portfolio, blog) is authored by one person (Jirka) and changes infrequently (when a new post is written). There is no user-generated content.
-- **No user accounts, no payments, no database** — per BRD scope.
-
-### Full landscape of options
-
----
-
-#### Option 1: Static Site Generation (SSG)
-
-**How it works.** All pages are pre-built at build time — before any visitor arrives. The build step reads your content (markdown files, templates), processes it, and outputs plain HTML/CSS/JS files. These files are uploaded to a server (or CDN) that simply **serves them as-is** to every visitor. No code runs on the server when someone visits.
-
-**Analogy.** It's like printing a magazine. You do all the work upfront (writing, layout, printing), and then every reader gets an identical copy. Changing content means printing a new edition.
-
-**What business capabilities this enables — what an architect sees.**
-
-An architect who deeply understands SSG sees these opportunities:
-
-- **Content businesses at near-zero infrastructure cost.** Because there's no server running, hosting is free or cents per month. This makes content-first businesses viable at any scale — from a personal blog to a media company serving millions of readers. The business model doesn't need to cover infrastructure costs. Example: many developer documentation sites (Stripe docs, Tailwind docs) are SSG — they serve millions of readers at negligible cost.
-
-- **Global performance without engineering effort.** SSG files can be deployed to CDNs (networks of servers worldwide). A reader in Tokyo gets the page from a Tokyo server; a reader in London from a London server. You get the performance of a global infrastructure without building one. This enables businesses where speed is the value proposition — e.g. a news site where being 500ms faster than competitors means readers prefer you.
-
-- **Security as a business feature.** No server means no server to hack. No database means no data breach. For industries where trust is the product (banking, healthcare, legal), being able to say "we have no server-side attack surface" is a real business advantage.
-
-- **Products where content changes slowly.** Blogs, documentation, marketing sites, portfolio sites, knowledge bases, recipe sites, review sites — anywhere the content is written by a small team and consumed by many readers. The rebuild-on-change model (1-2 minutes) works perfectly because content changes hours or days apart, not seconds.
-
-- **What SSG does NOT enable.** You cannot build a product where each user sees different content (personalized feeds, dashboards, "logged in as X"). You cannot build real-time features (chat, collaboration, live scores). You cannot build anything that requires user-generated content stored on your server (comments, reviews, uploads) without bolting on external services. If a client says "I want something like Twitter" and you only know SSG, you'll either fail or over-engineer a Frankenstein.
-
-**What this means in practice for any project using SSG:**
-- Every content change (new blog post, bio edit) requires a rebuild and redeploy — typically automated (push to git → CI builds → deploys in 1-2 minutes).
-- Every visitor gets the exact same page. No personalization.
-- The server does zero work per visitor — it just hands out pre-built files.
-
-**Trade-offs:**
-- ✅ Fastest load time possible.
-- ✅ Free or nearly free hosting.
-- ✅ Most secure — smallest attack surface.
-- ✅ Simplest to operate — no servers to maintain.
-- ✅ Works offline / on spotty conference WiFi once loaded.
-- ❌ Every content change needs a rebuild (1-2 min typically, automated).
-- ❌ Cannot do anything dynamic per-visitor without client-side JS or external services.
-- ❌ Adding dynamic features later requires either: adding client-side JS that talks to external services, or migrating to a different rendering strategy.
-
-**Who uses this.** Most developer blogs and portfolios. Dan Abramov's blog, Josh Comeau's site, Tailwind CSS docs, Stripe docs, many marketing sites for startups.
-
----
-
-#### Option 2: Server-Side Rendering (SSR)
-
-**How it works.** When a visitor requests a page, a **server receives the request, runs code, generates the HTML on the fly**, and sends it back. The server might read from a database, check if the user is logged in, personalize the content, or fetch data from APIs — all before the visitor sees anything.
-
-**Analogy.** It's like a restaurant kitchen. Every order is cooked fresh. The customer gets exactly what they asked for, but they have to wait for it to be prepared.
-
-**What business capabilities this enables — what an architect sees.**
-
-An architect who deeply understands SSR sees these opportunities:
-
-- **Personalized products.** Every user can see different content. This is what makes products like Netflix ("recommended for you"), Amazon ("based on your purchase history"), or a banking dashboard ("your accounts, your transactions") possible. If the core value proposition of your product is "each user sees something tailored to them," you need SSR (or SPA with API).
-
-- **Real-time data products.** Stock tickers, sports scores, flight status boards, monitoring dashboards — anywhere the data changes frequently and must be fresh when the page loads. SSR fetches the latest data on every request. This enables products in finance, logistics, operations, news — anywhere freshness is the value proposition.
-
-- **SaaS and B2B platforms.** Most SaaS products (Jira, Slack web, GitHub, Figma) use SSR or a hybrid because every user is logged in, has different data, different permissions, different team contexts. The server figures out "who are you and what should you see" before rendering.
-
-- **SEO-critical dynamic content.** If you need Google to index pages that are different for different contexts (e.g. location-specific content, product catalog pages), SSR gives you pre-rendered HTML that search engines can crawl — unlike SPA where Google must execute JavaScript.
-
-- **Full-stack in one codebase.** The same project handles the frontend AND the backend (API endpoints, database queries, authentication). For a startup MVP, this means one developer can build the entire product. No separate "frontend team" and "backend team" needed — one person, one project.
-
-- **What SSR does NOT enable that SSG does better.** SSR cannot match SSG's raw speed for static content — there's always server work per request. SSR adds operational complexity (a server must run, must scale, must be monitored). SSR costs more (compute per request vs. file serving). For content that doesn't change per user, SSR is doing unnecessary work.
-
-**What this means in practice for any project using SSR:**
-- A server must be running 24/7 (or spun up on demand — "serverless").
-- Each page load involves: receive request → run server code → maybe query database → generate HTML → send response.
-- More moving parts: server runtime, possibly a database, secrets management, monitoring, error handling.
-
-**Trade-offs:**
-- ✅ Full dynamic capability — can do anything (auth, personalization, real-time data, API endpoints).
-- ✅ Backend and frontend in one project.
-- ✅ SEO-friendly even for dynamic content.
-- ✅ Best learning path for full-stack development.
-- ❌ Slower than SSG for content that doesn't change per-visitor.
-- ❌ Costs money — a server must run.
-- ❌ More complex to operate — monitoring, scaling, error handling, cold starts.
-- ❌ Larger attack surface — server code can have vulnerabilities.
-
-**Who uses this.** GitHub, Vercel's own dashboard, most SaaS products, e-commerce platforms (Shopify storefronts), banking web apps, any product with user accounts and personalized content.
-
----
-
-#### Option 3: Single-Page Application (SPA)
-
-**How it works.** The server sends a nearly-empty HTML page plus a large JavaScript bundle. The visitor's **browser downloads the JS, executes it, and renders the entire site client-side**. Navigation between pages happens without full page reloads — JS swaps content in and out.
-
-**Analogy.** It's like shipping someone a flat-pack kit. They receive a box of parts (the JS bundle) and their browser assembles the furniture (the page) on site.
-
-**What business capabilities this enables — what an architect sees.**
-
-An architect who deeply understands SPAs sees these opportunities:
-
-- **App-like experiences in the browser.** If the product should feel like a native app — instant transitions, smooth animations, complex interactive state, drag-and-drop, collaborative editing — SPA is the natural fit. Think Figma, Google Docs, Notion, Spotify's web player. The user loads once and then has a rich, uninterrupted experience.
-
-- **Complex interactive tools.** Data visualization dashboards, video editors, code editors (VS Code in the browser), drawing tools, spreadsheets, project management boards. Anything where the user is actively manipulating data in the browser rather than passively reading content.
-
-- **Offline-capable products.** SPAs can cache their JS bundle and data locally, enabling products that work without internet. This enables field-work tools (construction inspectors, delivery drivers), developing-market apps where connectivity is unreliable, or productivity tools that work on planes.
-
-- **Separation of frontend and backend teams.** The SPA is a completely separate application from the backend API. Large companies often build this way: the API team builds the backend, the frontend team builds the SPA, they communicate via a documented API contract. Enables organizational scaling (different teams, different deploy schedules, different technologies).
-
-- **What SPA does NOT enable well.** SEO is a challenge — search engines may not execute JavaScript properly, so content may not be indexed. First load is slow (the entire JS application must download and execute before the user sees anything). Accessibility is harder. And for content-heavy sites (blogs, docs, portfolios), SPA is actively harmful — you're making the user download an entire application just to read text.
-
-**What this means in practice:**
-- First load is slow (browser must download and execute the entire JS bundle).
-- Subsequent navigation is fast and smooth (no page reloads).
-- The site shows literally nothing if JavaScript fails to load or is disabled.
-- Requires a separate backend API for any server-side functionality.
-
-**Trade-offs:**
-- ✅ Richest interactivity — best for app-like experiences.
-- ✅ Smooth navigation after initial load.
-- ✅ Clean separation of frontend and backend.
-- ✅ Good learning path for frontend framework skills (React, Vue, Angular).
-- ❌ Slow first load — directly conflicts with "instant impression" use cases.
-- ❌ SEO challenges.
-- ❌ Shows blank page while JS loads.
-- ❌ Accessibility challenges (NFR-2).
-- ❌ Overkill for content sites.
-
-**Who uses this.** Gmail, Figma, Notion, Spotify web, VS Code web, Jira. Almost exclusively for web *applications*, not content *sites*.
-
----
-
-#### Option 4: Hybrid / Islands Architecture
-
-**How it works.** Pages are statically generated (like SSG), but specific parts of the page can be "islands" of interactivity — small pieces of JavaScript that hydrate independently. The rest of the page is pure HTML with zero JavaScript.
-
-**Analogy.** It's like a printed magazine where a few pages have interactive QR codes or pull-tabs. Most of it is static print; only specific spots are interactive.
-
-**What business capabilities this enables — what an architect sees.**
-
-An architect who understands the islands architecture sees:
-
-- **Content sites that need targeted interactivity.** A documentation site with a live code playground. A recipe site with an interactive ingredient scaler. A portfolio with an embedded interactive demo. A blog with a search widget. The bulk is fast static content; the interactive parts load only when needed.
-
-- **E-commerce product pages with SSG performance.** The product description and images are static (fast), but the "add to cart" button, size selector, and inventory checker are interactive islands. This gives SSG speed for the part users see first, with SPA-like interactivity for the parts that need it.
-
-- **Progressive enhancement as a business strategy.** The core content works without JavaScript. Interactive features enhance but don't block the experience. This means the site works on slow devices, old browsers, and screen readers — expanding the addressable audience.
-
-- **What islands don't enable that you don't already get from SSG.** If your site has no interactivity at all (pure reading experience), islands architecture adds mental complexity for zero benefit — you'd just use plain SSG. And if your site needs *full-page* interactivity (every element is dynamic, like a dashboard), islands don't help — you'd use SSR or SPA.
-
-**Trade-offs:**
-- ✅ Best of SSG (speed, simplicity, security) with targeted interactivity.
-- ✅ Ships less JavaScript than SPA — only what's needed per island.
-- ✅ Natural fit for content + small interactive elements (your easter eggs, FR-7).
-- ❌ Newer concept — smaller community, fewer tutorials.
-- ❌ No benefit over plain SSG if there's truly no interactivity needed.
-- ❌ Adds a mental model you need to learn (what's an island, when to hydrate).
-
-**Who uses this.** Astro is the main framework built around this. Some Next.js and SvelteKit patterns achieve similar results. Used by content-heavy sites that need some interactivity.
-
----
-
-#### Option 5: Traditional Multi-Page Application (MPA / "old school server")
-
-**How it works.** A server (PHP, Ruby, Python, Java, Node.js) renders full HTML pages using templates. Every navigation is a full page reload — browser requests a URL, server generates HTML, browser renders it. This is how the web worked before SPAs and modern frameworks.
-
-**Analogy.** It's like a library where you request a book, the librarian fetches it from the shelf, and hands you a physical copy. Every request is a round trip.
-
-**What business capabilities this enables — what an architect sees.**
-
-An architect who understands traditional MPAs sees:
-
-- **The fastest path to a full product.** Frameworks like Ruby on Rails, Django, and Laravel come with everything: database ORM, authentication, admin panel, email sending, background jobs, file uploads, form handling. An experienced developer can build an MVP with user accounts, a database, payments, and an admin dashboard in a weekend. No other approach matches this speed for "full product from zero."
-
-- **The backbone of the existing web.** WordPress powers ~40% of the web. Most banking web apps, government portals, internal tools, and enterprise systems are traditional MPAs. Understanding this architecture means understanding most of the software that exists today — which is invaluable if you want to work in enterprise, consulting, or legacy modernization.
-
-- **Products where "boring" is a feature.** In banking, healthcare, government, and infrastructure — industries where reliability matters more than user experience — the simplicity and maturity of MPA architecture is an advantage. Few moving parts, battle-tested patterns, massive ecosystem of developers who understand it. When a bank chooses Django or Java Spring, they're choosing decades of proven reliability.
-
-- **Admin panels, internal tools, back-office systems.** Almost every company has internal tools that don't need to be pretty or fast — they need to be built quickly, work reliably, and show data from a database. MPA frameworks excel here. Django Admin, Rails Admin, Laravel Nova — these generate working admin panels automatically from your database schema.
-
-- **What MPA does NOT enable well.** The user experience is "clunkier" than SPA or modern SSR — every navigation reloads the whole page. Rich interactivity (drag-and-drop, real-time updates, smooth transitions) requires bolting on JavaScript separately. And for a purely static site (no database, no backend logic), an MPA adds unnecessary infrastructure.
-
-**Trade-offs:**
-- ✅ Fastest path to a full product with database, auth, admin.
-- ✅ Massive ecosystem — millions of tutorials, plugins, mature communities.
-- ✅ Battle-tested in enterprise and regulated industries.
-- ✅ Excellent learning path for backend development and understanding how most existing software works.
-- ❌ Requires a running server (cost, ops).
-- ❌ Slower page loads than SSG unless heavily cached.
-- ❌ Overkill for a site with no database or backend logic.
-- ❌ Clunkier UX compared to modern approaches.
-
-**Who uses this.** WordPress (~40% of the web), most bank web portals, government sites, internal enterprise tools, e-commerce (Shopify backend, Magento). Ruby on Rails built early Twitter, GitHub, Basecamp. Django built Instagram, Pinterest, Disqus.
-
----
-
-### How these relate to your BRD/PRD constraints
-
-| Constraint | SSG | SSR | SPA | Hybrid | MPA |
-|---|---|---|---|---|---|
-| Fast mobile load (US-5, NFR-1) | Best | Good (with caching) | Worst | Best | Good (with caching) |
-| No accounts, no DB needed (BRD scope) | Fits perfectly | Overkill | Overkill | Fits perfectly | Overkill |
-| Future backend possible (NFR-8) | Needs migration or external services | Built-in | Needs separate backend | Some built-in | Built-in |
-| Low cost | Free options | Free tiers exist, but limited | Free (same as SSG for hosting) | Free options | Needs server ($5-20/mo minimum) |
-| Low operational complexity (BRD risk) | Lowest | Medium-High | Low (same as SSG) | Low | Medium-High |
-| Security (NFR-4, NFR-6) | Best (no server) | More surface | Same as SSG | Best (no server) | More surface |
-| Content changes | Rebuild needed (1-2 min) | Instant (if DB) | Rebuild needed | Rebuild needed | Instant (if DB) |
-| Easter eggs / interactivity (FR-7) | Possible with client JS | Full capability | Full capability | Natural fit (islands) | Possible with client JS |
-| **Learning value** | Modern frontend + deployment | Full-stack development | Frontend frameworks | Cutting-edge patterns | Backend + how most existing software works |
-
-### Discussion
-
-This is where we talk before you decide. Some questions to consider:
-
-- **What do you want to learn from building this?** Not just "how to make a website" — which *kind* of technical capability do you want to build? Modern frontend tooling? Full-stack development? Backend architecture? Cloud infrastructure? Your answer might point toward a rendering strategy that's "overkill" for the website's requirements but perfect for your learning goals.
-
-- **About NFR-8 (future backend) — how real is it?** If there's a high chance you'll want dynamic features within a year (comments, contact form that stores data, user analytics dashboard, admin panel), that changes the calculus significantly. If the site will likely stay static for years, it matters less.
-
-- **You mentioned AWS.** AWS is primarily a hosting/infrastructure decision (DP-6), but it's relevant here because: SSG on AWS = S3 + CloudFront (very simple). SSR on AWS = Lambda + API Gateway or ECS (much more to learn). MPA on AWS = EC2 or ECS (classic server ops). If you want meaningful AWS learning, SSR or MPA gives you more to work with than SSG.
-
-- **How do you feel about the rebuild-on-every-change model?** For SSG/Hybrid, every blog post triggers a 1-2 minute automated rebuild. Is that acceptable, or would you prefer instant publishing?
-
-- **Would you rather ship the website fast and learn from building it, or learn deeply from the architecture even if it takes longer?** SSG is the fastest path to a live site. SSR or MPA would teach you more architecture but take longer and add complexity.
-
-- **Agent-friendliness (NFR-9) and future AI features (NFR-8).** The BRD now includes a future direction toward agent-consumable content and potentially an interactive AI feature. For v1, agent-friendliness is mostly about structured markup (works with any rendering strategy). But the future AI feature strengthens the case for a stack where adding API routes is a natural extension — not a rewrite.
-
-**There is no recommendation here.** All five options are legitimate. Your BRD/PRD constraints point toward SSG or Hybrid as the most practical fit for the website itself — but "practical fit" is not your only criterion. If learning full-stack architecture or AWS infrastructure matters more to you than shipping the simplest possible v1, that's a valid and intelligent reason to choose differently.
+### Constraints from BRD/PRD
+
+- Fast mobile load (US-5, NFR-1) — must feel instant
+- No accounts, no DB, no dynamic features in v1 — but must not foreclose adding a backend later (NFR-8)
+- Content authored by one person, changes infrequently
+- Digital avatar vision: v1 static for humans → v2 API for agents → v3 conversational AI avatar
+
+### Options considered
+
+| Strategy | How it works | Best for | Not for |
+|---|---|---|---|
+| **SSG** | All pages pre-built at build time → plain HTML served as-is. Like printing a magazine. | Content sites at near-zero cost, global CDN performance, maximum security (no server to hack). Blogs, docs, portfolios, marketing sites. | Per-user personalization, real-time data, user-generated content. |
+| **SSR** | Server generates HTML on each request. Like a restaurant kitchen — cooked fresh per order. | Personalized products (Netflix, banking dashboards), SaaS, real-time data, full-stack in one codebase. | Static content — unnecessary server work per request, more cost, more ops. |
+| **SPA** | Server sends empty HTML + large JS bundle. Browser renders everything client-side. | App-like experiences (Figma, Notion, Google Docs), complex interactive tools, offline-capable products. | Content sites — slow first load, SEO challenges, overkill for reading. |
+| **Hybrid/Islands** ✅ | Pages are statically generated, but specific parts ("islands") hydrate independently with JS. Rest is pure HTML. | Content sites that need targeted interactivity. SSG speed with surgical JS where needed. | Full-page interactivity (dashboards). No benefit over SSG if zero interactivity. |
+| **MPA** | Traditional server renders full HTML per request (PHP, Rails, Django). Every nav is a full page reload. | Fastest path to full product with DB/auth/admin. Battle-tested in enterprise. | Static sites — adds unnecessary infrastructure. Clunkier UX. |
+| **Edge Rendering** | Code runs at CDN edge locations near the visitor. Dynamic content with near-static latency. | SSR speed + SSG latency. Geo-awareness, A/B testing, API gateways. Complements SSG/Hybrid. | Heavy computation, long-running processes. Constrained environment. |
+
+*(Full exploration of each option's business capabilities, trade-offs, and who uses them was done during the decision process. See [1_TECHNOLOGY_GOD.md](../learning/1_TECHNOLOGY_GOD.md) and [2_AI_ACCELERATION.md](../learning/2_AI_ACCELERATION.md) for the architect's mental model on technology landscape knowledge.)*
 
 ### Decision
 
-*(To be filled in after discussion)*
 
-**Chosen:** ...
-**Why:** ...
-**What it enables for future projects (what you learned):** ...
-**What was traded away:** ...
+**Chosen:** Hybrid / Islands Architecture + Edge Rendering (as complementary layer)
+
+**Why:** The website has a dual long-term identity — human-facing (portfolio, blog, personality) and agent-facing (digital avatar). Hybrid gives the best fit for v1: static content that loads instantly on mobile (US-5, NFR-1), zero server infrastructure, free hosting — while islands provide a natural home for interactive elements (FR-7 easter eggs) without shipping unnecessary JS.
+
+Edge rendering is not the primary rendering strategy but a complementary layer that becomes relevant in v2/v3 — edge functions on AWS (CloudFront Functions, Lambda@Edge) will serve the avatar's API endpoints globally with low latency.
+
+The combination maps cleanly to AWS and supports the full evolution:
+- **v1:** Static HTML + island JS bundles → S3 + CloudFront. Learn AWS fundamentals (storage, CDN, DNS, SSL, IAM).
+- **v2:** API endpoints for agent consumption → Lambda@Edge or Lambda + API Gateway behind the same CloudFront distribution. Learn serverless and edge computing.
+- **v3:** Interactive AI avatar → Lambda/ECS + Bedrock. Learn cloud AI integration.
+
+**What it enables for future projects (what you learned):**
+- The islands mental model — understanding when and why to hydrate parts of a page — transfers to any content-heavy product that needs targeted interactivity.
+- The static-first + progressive enhancement pattern is the architecture behind most modern content businesses.
+- The hybrid-to-API evolution path is directly applicable to the "apps become APIs" thesis from [3_AGENTIC_DESIGN.md](../learning/3_AGENTIC_DESIGN.md).
+- AWS infrastructure knowledge compounds across every future project.
+
+**What was traded away:**
+- Not learning full-stack SSR patterns in v1 (deferred to v2/v3 when API routes are added).
+- Not learning traditional MPA patterns (Rails/Django) — but these are well-documented and can be learned separately.
+- Edge rendering constraints (limited execution time, restricted APIs) will require workarounds for heavier v3 logic — may need Lambda or ECS, not just edge functions.
+- Hybrid/Islands is a newer pattern with a smaller community than SSR or traditional SSG — fewer tutorials, more self-reliance.
 
 ---
 
 ## DP-2: Framework / Tool
 
-*(Depends on DP-1. The full landscape of options will be presented after the rendering strategy is chosen — the rendering strategy eliminates many framework options and makes others relevant.)*
+Given Hybrid/Islands rendering on AWS, **which framework do we build with?** DP-1 eliminates pure SPA frameworks and pure MPA frameworks. What remains are modern meta-frameworks that produce static output with selective interactivity.
+
+### Options considered
+
+| Framework | How it works | AWS story | Best for | Limitation |
+|---|---|---|---|---|
+| **Astro** ✅ | Islands-native. Zero JS by default, opt in per-component with `client:` directives. Can use React/Vue/Svelte components inside. Built-in content collections with type safety. | First-class SST support. `new sst.aws.Astro("Site")` handles S3, CloudFront, Lambda for API routes. | Content sites with targeted interactivity. Exactly what we're building. | Smaller community than Next.js. Less industry adoption. Astro-specific syntax not transferable. |
+| **Next.js** | React meta-framework. SSG/SSR/ISR/Edge mixed per page. Server Components = static by default, `"use client"` for interactivity. Largest ecosystem. | First-class SST support via OpenNext. Most complex deployment (more features = more Lambda functions). | Full-stack React apps. Industry standard. Best career investment for React roles. | Not true islands — ships React runtime (~80-100KB) even for content pages. Heavier than needed for content site. |
+| **SvelteKit** | Svelte compiles to vanilla JS (no runtime). SSG + SSR + API routes. Simplest syntax — feels like enhanced HTML. | SST support via adapter-node, less mature. Fewer deployment guides. | Smallest JS footprint for interactive sites. Elegant mental model. | Smallest ecosystem. Least employable. Svelte 5 API change causing community fragmentation. |
+| **Eleventy** | Pure static site generator. Templates → HTML, zero framework. Add vanilla JS manually for interactivity. | Simplest: build → S3 → CloudFront. But no built-in API routes — v2 avatar needs separate Lambda project. | Maximum simplicity. Pure web fundamentals. | No islands, no component model, no API routes. v1→v2 gap is a bigger jump. |
+
+### Cost
+
+All four frameworks are free and open source. The cost is in AWS hosting, which depends on the rendering model and evolution stage.
+
+**v1 — Static site (all frameworks produce static files):**
+
+| AWS Service | What it does | Cost |
+|---|---|---|
+| S3 | Stores HTML/CSS/JS files | ~$0.02/month |
+| CloudFront | CDN — serves files globally | Free tier: 1TB/month first year. After: ~$0.085/GB |
+| Route 53 | DNS (connects domain) | $0.50/month |
+| ACM | SSL certificate (https://) | Free |
+
+**v1 total: ~$0.50-1/month.** Essentially just DNS. Free tier covers everything else at personal-site traffic volumes.
+
+**v2 — API layer for avatar (Lambda + API Gateway):**
+
+| AWS Service | What it does | Cost |
+|---|---|---|
+| Lambda | Runs avatar API code | Free tier: 1M requests/month. After: $0.20 per 1M |
+| API Gateway | Routes requests to Lambda | Free tier: 1M calls/month first year. After: $3.50 per 1M |
+
+**v2 total: ~$1-2/month.** Personal avatar traffic stays within or near free tier.
+
+**v3 — Conversational AI avatar (+ LLM):**
+
+| Service | What it does | Cost |
+|---|---|---|
+| Bedrock (Claude Haiku) | LLM for conversation | ~$0.01-0.05 per conversation |
+| Or Anthropic API directly | Same, external to AWS | Similar token-based pricing |
+
+**v3 total: depends on usage.** 100 conversations/month ≈ $1-5/month. Needs a budget cap if traffic grows.
+
+**Comparison: AWS vs. easy alternatives**
+
+| | AWS (S3+CloudFront) | Vercel/Netlify | Cloudflare Pages |
+|---|---|---|---|
+| v1 cost | ~$0.50-1/mo | Free | Free |
+| v1 setup effort | Medium (learn IAM, S3, CloudFront) | One click | One click |
+| v2 cost | ~$1-2/mo | Free tier exists | Free tier (Workers) |
+| v3 cost | LLM tokens + Lambda | LLM tokens + serverless | LLM tokens + Workers |
+| **What you learn** | **Real cloud infrastructure** | Platform abstractions | Edge computing |
+
+The honest tradeoff: AWS costs slightly more and requires significantly more setup effort. You're paying in time and complexity to learn real infrastructure. Vercel/Netlify gives you free, one-click deploys — but you learn almost nothing about how hosting actually works. The domain (DP-7) is the biggest fixed cost regardless: ~$10-15/year.
+
+### Decision
+
+**Chosen:** Astro (with React components for interactive islands)
+
+**Why:** Astro is the natural architectural fit for Hybrid/Islands on a content-first site. It starts with HTML — familiar territory coming from backend — and adds complexity only where needed. The key insight that resolved the Astro-vs-Next.js tension: **the career investment is React, not Next.js.** Astro lets you use real React components as islands — same JSX, same hooks, same patterns that interviews test. You learn React gradually (one island at a time) rather than immersively (everything is React from day one), which fits the "build minimal, play with it" approach and the reality of never having built a frontend from scratch.
+
+The v1→v2→v3 path is supported: Astro API routes deploy as Lambda via SST, covering the avatar API. If Astro's limits are ever hit in v3 (heavy full-stack patterns), migrating to Next.js is a weekend project — markdown content is portable, React components transfer as-is, AWS infrastructure stays the same. By then you'll know exactly WHY you need Next.js, which means you'll use it effectively.
+
+**What it enables for future projects (what you learned):**
+- HTML/CSS/JS fundamentals without framework abstraction hiding the web platform.
+- React — learned incrementally through real interactive components, transferable to any React project or Next.js.
+- Islands architecture mental model — understanding when and why to hydrate, applicable to any content-heavy product.
+- Astro's content collections — typed, schema-validated content management pattern.
+- The full Astro + SST + AWS deployment chain.
+
+**What was traded away:**
+- Not learning Next.js-specific patterns (Server Components, App Router, ISR, middleware) — these matter for senior React roles but not for current learning stage. Can be learned later if/when migrating.
+- Smaller community than Next.js — fewer tutorials, fewer Stack Overflow answers when stuck.
+- Astro template syntax (`.astro` files) is not transferable — but it's close to HTML, so the knowledge loss is minimal.
+- Less industry name recognition — "I built this in Astro" impresses less in a job interview than "I built this in Next.js." The React components in the portfolio compensate for this.
 
 ---
 
 ## DP-3: Programming Language
 
-*(Depends on DP-2. The framework choice heavily constrains or decides the language.)*
+### Decision
+
+**Chosen:** TypeScript (JavaScript with types)
+
+**Why:** Astro uses JavaScript/TypeScript natively. TypeScript is the industry default for any serious frontend or full-stack project — it catches errors at build time, provides autocompletion in the IDE, and is the language of the React ecosystem you'll be writing islands in. Coming from Java, TypeScript's type system will feel familiar (interfaces, generics, type annotations) while being less ceremonious. Astro supports TypeScript out of the box with zero config.
+
+**What was traded away:** Nothing meaningful. Plain JavaScript is the only alternative, and it's strictly less capable for a project that will grow. The small overhead of learning TypeScript-specific syntax (union types, type inference, `as const`) pays for itself immediately in editor support and fewer runtime bugs.
+
+*(No full landscape exploration needed — DP-2 constrains this to JavaScript or TypeScript, and the choice between them is straightforward.)*
 
 ---
 
 ## DP-4: Content Management
 
-*(How is content authored and stored? Markdown in git, headless CMS, database, HTML templates? Partially constrained by PRD NFR-7 which says no CMS — but understanding what CMS options exist and why companies use them is part of the architect's knowledge.)*
+Every website has content — text, images, data — and something has to answer three questions: **where does it live?** (storage), **how do you edit it?** (authoring experience), and **how does it get into the page?** (delivery). The answers to these questions define your content management approach. For a personal blog, the stakes feel low. For a media company, a SaaS product, or an e-commerce site, content management is the entire business — and the architecture choice determines what products and workflows are possible.
+
+### Constraints from BRD/PRD
+
+- NFR-7: Content must be editable directly in source files (markdown or similar), publishable in a single commit. No external CMS dependency.
+- Single author (Jirka), technical, comfortable with git and VS Code.
+- Content types: blog posts (the retention driver), portfolio projects, bio, "what I'm open to" copy.
+- Blog must support headings, code blocks, images, and links (FR-4).
+- Content changes infrequently — no real-time publishing pressure.
+- v2/v3 avatar will need to consume content programmatically (agentic design consideration).
+
+### Options considered
+
+#### 1. Raw HTML in components
+
+Content is hardcoded directly in `.astro` or `.tsx` files — no separation between content and presentation.
+
+```astro
+<!-- src/pages/blog/my-post.astro -->
+<Layout>
+  <h1>My Post Title</h1>
+  <p>Published: 2026-04-07</p>
+  <p>Here is the content, mixed in with HTML tags...</p>
+</Layout>
+```
+
+**What it enables as a business capability:**
+- Nothing beyond what the other options provide. This is the absence of a content strategy.
+- Works for hardcoded pages that rarely change (legal pages, about pages with stable copy).
+
+**Trade-offs:**
+- Zero abstraction — you control every pixel.
+- But content and presentation are tangled. Changing how blog posts look means editing every post file. Adding metadata (tags, dates, descriptions) means manually keeping HTML structures consistent.
+- No way to query or list content programmatically (e.g., "show the 5 most recent posts on the homepage") without manual maintenance.
+- Scales terribly. At 5 posts it's manageable; at 50 it's a maintenance nightmare.
+- The avatar (v2/v3) would have no structured content to consume — it would need to parse HTML.
+
+**Who uses this:** Almost no one for content-heavy sites. Sometimes seen in single-page marketing sites or landing pages where every pixel is custom-designed and content never changes.
+
+#### 2. Markdown in git (with a framework's content layer)
+
+Content lives as `.md` files in the repository. A framework feature (like Astro's Content Collections) reads these files at build time, validates their frontmatter against a schema, and makes them queryable.
+
+```markdown
+---
+# src/content/blog/my-post.md
+title: "My Post Title"
+date: 2026-04-07
+tags: ["typescript", "learning"]
+description: "What I learned building my first Astro site."
+---
+
+Here is the content in **markdown**. Just text.
+
+## A heading
+
+A code block:
+```ts
+const x: number = 42;
+```                                          
+```
+
+The framework's content layer (Astro Content Collections) provides:
+- **Schema validation** — define what frontmatter fields exist and their types. A post without a `title` or with a malformed `date` fails the build, not silently renders wrong.
+- **Type safety** — TypeScript knows that `post.data.title` is a string and `post.data.tags` is a `string[]`. Autocompletion in VS Code.
+- **Queryable** — `getCollection('blog')` returns all posts. Sort by date, filter by tag, paginate — all type-safe.
+- **Automatic slug generation** — file name becomes the URL. `my-post.md` → `/blog/my-post`.
+
+**What it enables as a business capability:**
+- **Content as data.** Once content is structured (typed frontmatter + body), it's not just "a page" — it's a queryable dataset. This is the foundation of any content-driven product: blogs, documentation sites, knowledge bases, course platforms, recipe sites. The pattern is always the same: structured content → query → render.
+- **Git as CMS.** Every edit is a commit. You get version history, diffs, branching (draft a post on a branch, merge to publish), pull request reviews, and rollback — all for free. For a solo author, this is more powerful than most CMS admin panels.
+- **Portable content.** Markdown is universal. If you ever outgrow Astro, your content moves with you — Next.js, Hugo, Eleventy, or any system that reads markdown. No vendor lock-in.
+- **Agent-friendly (v2/v3).** Structured frontmatter + markdown body is trivially parseable by an AI agent. The avatar can consume your blog posts, portfolio, and bio as structured data without scraping HTML.
+- **Static site economics.** Content rendered at build time = HTML files on a CDN. No server, no database, no CMS hosting cost. The entire content pipeline is free.
+
+**Trade-offs:**
+- Authoring experience is a text editor + git. No visual preview while writing (unless you set up a local dev server or use an editor with markdown preview). No drag-and-drop images, no WYSIWYG formatting.
+- Images require manual handling — save the file, reference the path in markdown, ensure it's optimized. No automatic resizing or format conversion (unless you add tooling).
+- Non-technical people cannot contribute content without learning git.
+- Content and code live in the same repo — a blog post commit triggers the same CI/CD pipeline as a code change.
+
+**Who uses this:** Developer blogs, documentation sites (Stripe, Tailwind, Astro's own docs), open-source project sites, personal portfolios. Any site where the author is technical and the content is text-heavy.
+
+#### 3. MDX (Markdown + JSX components)
+
+MDX extends markdown with the ability to import and use React (or other framework) components inline. The file is `.mdx` instead of `.md`.
+
+```mdx
+---
+title: "Interactive Demo Post"
+date: 2026-04-07
+---
+
+Here is normal markdown text.
+
+But I can also drop in a **live component**:
+
+import { InteractiveChart } from '../../components/Chart';
+
+<InteractiveChart data={[1, 4, 2, 8, 5]} />
+
+And then continue writing in markdown.
+```
+
+Astro supports MDX natively via `@astrojs/mdx` integration. MDX files work with Content Collections the same way `.md` files do — same schema validation, same type safety, same queries.
+
+**What it enables as a business capability:**
+- **Interactive content.** Blog posts can contain live demos, interactive charts, embedded code playgrounds, custom callout boxes, animated diagrams — anything a React component can render. This is what separates a *developer blog* from a *developer publication*.
+- **Content as product.** Courses (interactive exercises in lessons), documentation (live API explorers), technical blogs (runnable code examples) — MDX is the foundation. Sites like Josh Comeau's blog, Kent C. Dodds' courses, and Stripe's docs use this pattern.
+- **Component reuse.** Define a `<Callout>` component once, use it in every post. Consistent design without copy-pasting HTML. Design system meets content.
+
+**Trade-offs:**
+- Content is no longer pure markdown — it has JavaScript imports and JSX. Less portable (not every system understands MDX). If you move to a non-JS platform, MDX files need conversion.
+- Mixing content and code in the same file blurs the boundary. A broken component import breaks the blog post build.
+- Heavier builds — MDX files are compiled through a JS pipeline, not just parsed as text.
+- Overkill if your posts are just text with headings and code blocks. The complexity exists whether you use components or not.
+- Slightly steeper learning curve — you need to understand JSX imports, component props, and how the MDX compiler works.
+
+**Who uses this:** Developer educators (Josh Comeau, Kent C. Dodds), technical documentation with live examples (Storybook, Chakra UI), interactive course platforms, any content site where posts need to do more than display text.
+
+#### 4. Headless CMS (Contentful, Sanity, Strapi, Hygraph, Payload)
+
+Content lives in an external platform with its own database, admin UI, and API. Your site fetches content from that API at build time (or runtime) and renders it.
+
+```
+Author writes in CMS admin panel → Content stored in CMS database → 
+Build triggers API fetch → Framework renders to HTML → Deploy
+```
+
+The "headless" part means: the CMS has no frontend — it only provides content via API. You build the frontend yourself (in Astro, Next.js, whatever). Compare to "traditional CMS" (WordPress) where the CMS IS the frontend.
+
+**Major players and what they're good at:**
+
+| CMS | Model | Sweet spot |
+|---|---|---|
+| **Contentful** | SaaS, structured content | Enterprise content operations. Strong content modeling, localization. |
+| **Sanity** | SaaS, real-time collaboration | Custom editing experiences (Sanity Studio is fully customizable React). Real-time preview. |
+| **Strapi** | Open-source, self-hosted | Full control. Own your data. REST + GraphQL APIs. |
+| **Hygraph** (ex-GraphCMS) | SaaS, GraphQL-native | Content federation — pull from multiple sources. |
+| **Payload** | Open-source, code-first | Developer-centric. Schema defined in TypeScript. Closest to "headless CMS for developers." |
+
+**What it enables as a business capability:**
+- **Non-technical content teams.** The entire reason headless CMS exists: editors, marketers, and writers author content in a visual interface without touching code. This unlocks content operations at scale — editorial calendars, approval workflows, scheduled publishing, role-based permissions.
+- **Multi-channel delivery.** Same content, delivered via website, mobile app, email newsletter, in-app notifications, digital signage, and — critically — APIs for AI agents. Write once, publish everywhere. The content is decoupled from any single presentation.
+- **Structured content as a business asset.** A headless CMS forces content modeling: defining content types, fields, relationships, and validation rules. This turns content from "pages" into a structured, queryable, reusable dataset. E-commerce (product catalog), media (articles + authors + categories), SaaS (help docs + changelog + marketing) — all content-driven businesses depend on this.
+- **Localization / i18n.** Most headless CMS platforms have built-in support for multiple languages — a hard requirement for any product serving international markets.
+- **Preview and editorial workflow.** Draft → Review → Publish pipelines. Content preview before going live. Scheduled publishing. Version history and rollback. These workflows are what allow a 50-person content team to operate without stepping on each other.
+
+**Trade-offs:**
+- External dependency. The CMS is a service you don't control — pricing changes, API changes, downtime.
+- Cost at scale. Free tiers exist (Contentful: 25K records, Sanity: 100K API requests/month) but content-heavy sites or high-traffic sites hit paid tiers quickly. Enterprise plans run $300-2,000+/month.
+- Added complexity. Content fetch at build time adds a network dependency. Webhook-triggered rebuilds add infrastructure. Local development needs mocked data or API access.
+- Content-code separation can become a pain: the CMS schema and the frontend components must stay in sync manually.
+- Overkill for a single-author site with infrequent updates. All the workflow, permissions, and multi-channel machinery serves no purpose.
+
+**Who uses this:** Marketing sites for mid-to-large companies (content teams publish independently of engineering), e-commerce (product catalogs), media/publishing, documentation platforms, any product where non-developers need to create and manage content.
+
+#### 5. Git-based CMS (TinaCMS, Decap/Netlify CMS, Forestry → now Tina)
+
+A visual editing interface that reads from and commits to your git repository. The content still lives as markdown files in your repo, but you get a web-based editor with a rich-text toolbar, media management, and preview — all backed by git commits.
+
+```
+Author edits in visual web UI → CMS commits .md file to git repo → 
+CI/CD rebuilds site → Deploy
+```
+
+**What it enables as a business capability:**
+- **Best of both worlds.** Git is the source of truth (version history, branching, portability), but the authoring experience is visual. Non-technical collaborators can contribute without learning markdown or git.
+- **Real-time visual editing.** TinaCMS in particular offers in-context editing: you see the actual rendered page and edit inline. This is as close to "WYSIWYG for static sites" as it gets.
+- **No vendor lock-in on content.** Because the content is still markdown in git, you can remove the CMS layer at any time and keep editing files directly. The CMS is a convenience layer, not a dependency.
+
+**Trade-offs:**
+- Another service/dependency to set up and maintain (TinaCMS has a cloud service; Decap needs an identity/auth provider).
+- The visual editor's capabilities are limited by what the underlying format supports. Markdown has no concept of columns, cards, or complex layouts — so the editor can't create them.
+- Adds complexity for a single technical author who's comfortable in VS Code. The visual editor solves a problem you don't have.
+- Smaller ecosystems — TinaCMS and Decap are niche tools compared to the headless CMS players.
+
+**Who uses this:** Small agency sites where clients need to edit content. Open-source documentation projects where non-technical contributors need a low-barrier editing path. Small business sites maintained by the business owner.
+
+#### 6. Full platform CMS (WordPress, Ghost, Medium)
+
+The CMS IS the product. Content lives in the platform's database, the platform renders the frontend, handles hosting, and provides the entire publishing workflow.
+
+| Platform | Model | Sweet spot |
+|---|---|---|
+| **WordPress** | Open-source (self-hosted or wordpress.com) | 43% of the web. Plugin ecosystem for anything. Themes for any design. |
+| **Ghost** | Open-source (self-hosted or Ghost Pro) | Modern blogging + newsletters + memberships. Clean, fast, focused. |
+| **Medium** | SaaS platform | Zero setup. Built-in audience. But no customization, you don't own the platform. |
+
+**What it enables as a business capability:**
+- **Publishing as a product immediately.** Ghost in particular enables a paid newsletter/membership business out of the box: Stripe integration, subscriber management, email delivery, content paywalling. This is a complete content business platform.
+- **WordPress's plugin ecosystem** enables essentially any web product: e-commerce (WooCommerce), LMS (LearnDash), forums (bbPress), membership sites, job boards, directories. 43% of websites run WordPress — it IS the web for non-technical businesses.
+- **Zero-to-published in minutes.** No build pipeline, no deployment, no infrastructure. The value proposition is speed to market for content.
+
+**Trade-offs:**
+- You're running a server (WordPress/Ghost self-hosted) or paying for hosting (WordPress.com, Ghost Pro — $9-25+/month).
+- Performance overhead — dynamic rendering, database queries, plugin bloat (WordPress especially). Opposite of SSG's "pre-built HTML on CDN."
+- Security surface area — WordPress is the #1 target for web attacks precisely because it's 43% of the web. Constant updates, plugin vulnerabilities, brute-force login attempts.
+- Vendor lock-in (Medium especially — you don't own the URL, the design, or the distribution algorithm).
+- Completely misaligned with the learning goals of this project. You learn WordPress/Ghost/Medium — not web fundamentals, not AWS, not frontend architecture.
+
+**Who uses this:** Most of the web. Small businesses, bloggers, publishers, e-commerce stores, news sites, agencies. Anyone who values speed to market and ecosystem over architectural control and learning.
+
+### How this maps to your project
+
+| Option | Fits NFR-7? | Fits single author? | Supports v2/v3 avatar? | Learning value |
+|---|---|---|---|---|
+| Raw HTML | ✅ source files | ✅ | ❌ unstructured | ❌ anti-pattern |
+| **Markdown in git** | ✅ single commit | ✅ perfect | ✅ structured frontmatter | ✅ content-as-data pattern |
+| **MDX** | ✅ single commit | ✅ | ✅ structured | ✅ interactive content |
+| Headless CMS | ❌ external system | ⚠️ overkill | ✅ API-native | ✅ but wrong context |
+| Git-based CMS | ✅ git-backed | ⚠️ unnecessary | ✅ structured | ⚠️ solves a problem you don't have |
+| Full platform CMS | ❌ external system | ✅ | ⚠️ varies | ❌ wrong learning path |
+
+The realistic choice is between **Markdown** and **MDX**. Everything else is either eliminated by NFR-7 or adds complexity for capabilities you don't need.
+
+**Markdown vs MDX — the actual decision:**
+
+- **Markdown** is simpler. Posts are pure text. Portable everywhere. If your blog posts are writing + code blocks + images (which FR-4 specifies), markdown does everything you need.
+- **MDX** adds the ability to embed React components inside posts. Interesting if you want interactive demos in blog posts (e.g., a live chart showing a concept, an interactive code playground). But it adds build complexity, reduces portability, and you need to know enough React to write those components first.
+
+With Astro Content Collections, you can start with `.md` and switch individual posts to `.mdx` later without any migration — they coexist in the same collection. This is not a one-way door.
+
+### Discussion
+
+The landscape here is broad, but the decision for your project is narrow. The more interesting takeaway is understanding **when and why** you'd reach for the other options in future projects:
+
+- Building a product where non-technical people create content → **headless CMS**
+- Building a content business (paid newsletter, membership) → **Ghost**
+- Building an agency site for a client who needs to edit → **git-based CMS**
+- Building interactive educational content → **MDX**
+- Building a developer blog/portfolio → **Markdown in git**
+
+**Open question for you:** Do you see yourself wanting interactive components inside blog posts in v1? Or is v1 purely text + code blocks + images, with interactive elements reserved for the islands (easter eggs, etc.) outside of blog content?
 
 ---
 

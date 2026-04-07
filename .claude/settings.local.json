@@ -10,7 +10,8 @@
       "Bash(mv \"docs/learning/LEARNING_GOAL.md\" \"docs/learning/THE_DESTINATION.md\")",
       "Bash(mv \"docs/learning/AI_IN_SDLC.md\" \"docs/learning/THE_ACCELERATOR.md\")",
       "Bash(mv \"docs/learning/THE_DESTINATION.md\" \"docs/learning/1_TECHNOLOGY_GOD.md\")",
-      "Bash(mv \"docs/learning/THE_ACCELERATOR.md\" \"docs/learning/2_AI_ACCELERATION.md\")"
+      "Bash(mv \"docs/learning/THE_ACCELERATOR.md\" \"docs/learning/2_AI_ACCELERATION.md\")",
+      "Bash(cp /tmp/td_temp.md \"docs/sdlc/Technology Decisions.md\")"
     ]
   }
 }

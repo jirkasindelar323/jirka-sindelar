@@ -69,8 +69,18 @@ The site's primary business outcome is retention, so KPIs lean toward engagement
 
 ### Future direction (not v1, but informing architectural choices)
 
-- **Agent-friendly site.** As AI agents increasingly mediate how people discover and consume content (see [3_AGENTIC_DESIGN.md](../learning/3_AGENTIC_DESIGN.md)), the site should be consumable by agents — not just human visitors. In practice this means structured metadata and potentially a simple API endpoint that exposes content (bio, portfolio, blog posts) in a machine-readable format. This is low effort in v1 (structured HTML, good meta tags, semantic markup) with the option to add a dedicated JSON endpoint later. The site itself becomes a demonstration of the builder thinking Jirka writes about: if apps become APIs, a personal site should be agent-friendly too.
-- **Interactive AI features.** The site could eventually include a conversational element or AI-powered feature that demonstrates Jirka's understanding of agentic technology — not as a gimmick, but as evidence of builder capability. This is a v2+ consideration that informs the NFR-8 extendability requirement: the stack should accommodate a future backend with API routes.
+- **Digital avatar — the site as Jirka's augmented self.** The long-term vision is that the website IS Jirka's digital avatar — an augmented version of himself that can introduce itself and communicate with both humans and agents. The same way Jirka would introduce himself at a conference ("I'm Jirka, I'm a builder, here's what I think about, here's what I've done, here's what I'm interested in"), the avatar does the same — in HTML for humans, in structured protocol for agents.
+
+  The key idea: **anyone can easily connect their agent to the avatar.** A recruiter's personal agent, a collaborator's assistant, a conference organizer's tool — they discover the avatar, it advertises what it can provide ("I can tell you about Jirka's work, his thinking on agentic design, his background, whether he's open to collaboration"), and the conversation happens. This follows the same pattern as MCP (Model Context Protocol) where a server advertises capabilities and agents discover and use them.
+
+  The avatar has a **soul.md** — an explicit definition of identity, values, voice, and perspective that shapes how it represents Jirka. For humans, the soul is implicit (expressed through the site's tone, humor, design). For agents, the soul is explicit — it's what makes the avatar feel like talking to Jirka rather than querying a database. The soul.md encodes: builder identity, values (honesty over polish, craft over speed, understanding over just picking), voice, perspective on technology and building, and boundaries (what the avatar won't pretend to know).
+
+  The evolution path:
+  - **v1:** Static site for humans. Structured markup, semantic HTML, JSON-LD — the avatar speaks to humans; agents can read the structured HTML passively. The soul exists implicitly in the site's voice, content, and design.
+  - **v2:** API + capability discovery + soul.md. The avatar advertises what it can provide and exposes structured endpoints. The soul.md becomes a first-class component — shaping how the avatar communicates, not just what data it serves. Any agent can connect and ask questions.
+  - **v3:** Conversational avatar. An AI agent that represents Jirka's perspective — answers questions, synthesizes across his content, engages in dialogue with both humans and other agents. The soul.md guides the avatar's personality, tone, and judgment in conversations.
+  
+  This future direction is concrete enough to inform architectural choices (the stack must support API routes, capability discovery, and eventually server-side AI logic) but is NOT v1 scope. See [3_AGENTIC_DESIGN.md](../learning/3_AGENTIC_DESIGN.md) for the thinking behind this.
 
 ## Risks & Assumptions
 
