@@ -112,6 +112,22 @@ Peter Steinberger (creator of OpenClaw) and his community are already seeing wha
 
 This is early. As Steinberger says: "We are just beginning to understand what this means."
 
+### The next step: an agent labor market
+
+If apps become APIs and agents become the interface layer, the logical extension is: **agents become economic actors.** Not just tools that execute commands, but specialized workers that can be discovered, evaluated, and hired — by humans or by other agents.
+
+The mental model: a job market for agents. Some agents are generalists, some are specialists. Some work for free (open-source, community-owned), some charge per task or per subscription. They belong to individuals (a personal avatar), companies (a customer support agent), or communities (a shared knowledge agent).
+
+**What this implies for design:**
+- **Discovery** — how does an agent (or human) find the right specialist? Capability manifests, reputation systems, agent directories. The equivalent of job boards and LinkedIn, but for agents.
+- **Trust and reputation** — before "hiring" an agent, you need to evaluate it. Track record, provenance (who built it, who owns it), quality guarantees. This is a new design space — trust signals for non-human workers.
+- **Payment rails** — micropayments for agent-to-agent services. An agent that summarizes legal documents charges per page. An agent that translates charges per word. Usage-based pricing becomes the default, which means billing infrastructure becomes part of agent design.
+- **Ownership and accountability** — if a company's agent makes a mistake while working for someone else, who's liable? If a personal avatar misrepresents its owner, what's the recourse? These are governance questions that don't exist in classic software.
+
+**Connection to the digital avatar:** In this model, the personal avatar isn't just a portfolio that agents can read — it's a **participant in the marketplace.** It advertises capabilities ("I can tell you about Jirka's work and thinking"), it has an owner (Jirka), and it could eventually offer paid services (consulting introduction, detailed technical assessment). The v2/v3 architecture should consider not just "serve content to agents" but "participate as an agent in a broader ecosystem."
+
+This is speculative — the infrastructure for agent-to-agent commerce doesn't exist yet. But the direction is clear from the "apps become APIs" trend: if services become APIs and agents become the consumers, then agents that provide services to other agents are the natural next layer.
+
 ## You can't automate style, love, and human touch
 
 Steinberger on how he builds with agents:
