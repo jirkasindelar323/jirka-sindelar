@@ -8,12 +8,12 @@ This document translates the requirements from [BRD.md](BRD.md) and [PRD.md](PRD
 
 ## Introduction & References
 
-| Document | What it answers |
-|---|---|
-| [BRD.md](BRD.md) | Why are we building this? For whom? What does success look like? |
-| [PRD.md](PRD.md) | What does it do? User stories, functional/non-functional requirements, acceptance criteria. |
-| [Technology Decisions.md](Technology%20Decisions.md) | What technologies did we choose and why? Full landscape exploration for each decision. |
-| This document (SDD) | How is it built? Architecture, components, data flow, deployment, security. |
+| Document                                             | What it answers                                                                             |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [BRD.md](BRD.md)                                     | Why are we building this? For whom? What does success look like?                            |
+| [PRD.md](PRD.md)                                     | What does it do? User stories, functional/non-functional requirements, acceptance criteria. |
+| [Technology Decisions.md](Technology%20Decisions.md) | What technologies did we choose and why? Full landscape exploration for each decision.      |
+| This document (SDD)                                  | How is it built? Architecture, components, data flow, deployment, security.                 |
 
 **Scope:** This SDD covers v1 only — a static website for humans. v2 (avatar API) and v3 (conversational avatar) are referenced where v1 decisions deliberately leave room for them, but their architecture is not designed here.
 
