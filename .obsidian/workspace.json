@@ -182,6 +182,8 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "src/components/BlogPost.astro",
+    "src/pages/posts/post-4.md",
     "node_modules/@types/react-dom/static.browser.d.ts",
     "node_modules/caniuse-lite/data/regions/ZW.js",
     "node_modules/caniuse-lite/data/regions/ZM.js",
@@ -192,7 +194,6 @@
     "node_modules/caniuse-lite/data/regions/WF.js",
     "node_modules/caniuse-lite/data/regions/VU.js",
     "node_modules/caniuse-lite/data/regions/VN.js",
-    "node_modules/caniuse-lite/data/regions/VI.js",
     "node_modules/caniuse-lite/README.md",
     "node_modules/csstype/README.md",
     "node_modules/@babel/helpers/README.md",
@@ -217,7 +218,6 @@
     "node_modules/@babel/helper-module-imports/README.md",
     "node_modules/@types/babel__template/README.md",
     "node_modules/@babel/helper-globals/README.md",
-    "node_modules/@types/babel__traverse/README.md",
     "public/favicon.svg",
     "astro-project/public/favicon.svg"
   ]

@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogPost from '../components/BlogPost.astro';
+const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
 
 ---
 <BaseLayout pageTitle="Blog">
@@ -8,8 +10,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h1>My Astro Learning Blog</h1>
     <p>This is where I will post about my journey learning Astro.</p>
     <ul>
-      <li><a href="/posts/post-1/">Post 1</a></li>
-      <li><a href="/posts/post-2/">Post 3</a></li>
-      <li><a href="/posts/post-3/">Post 3</a></li>
+      {allPosts.map((post: any) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
     </ul>
   </BaseLayout>
