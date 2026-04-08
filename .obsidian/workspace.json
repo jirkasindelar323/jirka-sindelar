@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/sdlc/SDD.md",
+                "file": "docs/sdlc/Technology Decisions.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SDD"
+              "title": "Technology Decisions"
             }
           }
         ]
@@ -182,18 +182,22 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "src/styles/global.css",
+    "src/styles",
+    "src/pages/styles/global.css",
+    "src/pages/styles",
+    "src/pages/posts/post-3.md",
+    "src/pages/posts/post-3.astro",
+    "src/pages/posts/post-2.md",
+    "src/pages/posts/post-1.md",
+    "src/pages/posts",
+    "src/pages/404.astro",
+    "src/pages/blog.astro",
+    "src/pages/about.astro",
+    "docs/sdlc/SDD.md",
     "tsconfig.json",
     "package-lock.json",
-    "package.json",
-    "astro.config.mjs",
-    "src/pages/index.astro",
-    "src/pages",
-    "src",
     "public/favicon.svg",
-    "public/favicon.ico",
-    "public",
-    "node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/ui/audit-ui.js",
-    "node_modules/astro/dist/runtime/client/dev-toolbar/apps/audit/ui/audit-ui.d.ts",
     "node_modules/csso/node_modules/mdn-data/css/readme.md",
     "node_modules/dom-serializer/node_modules/entities/readme.md",
     "node_modules/csso/node_modules/mdn-data/README.md",
@@ -215,10 +219,6 @@
     "node_modules/@shikijs/langs/README.md",
     "node_modules/@shikijs/core/README.md",
     "node_modules/@shikijs/engine-javascript/README.md",
-    "node_modules/@shikijs/engine-oniguruma/README.md",
-    "node_modules/@rollup/rollup-win32-x64-msvc/README.md",
-    "node_modules/@rollup/rollup-win32-x64-gnu/README.md",
-    "node_modules/@rollup/pluginutils/README.md",
     "astro-project/public/favicon.svg"
   ]
 }

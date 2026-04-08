@@ -132,13 +132,13 @@ All four frameworks are free and open source. The cost is in AWS hosting, which 
 
 **Comparison: AWS vs. easy alternatives**
 
-| | AWS (S3+CloudFront) | Vercel/Netlify | Cloudflare Pages |
-|---|---|---|---|
-| v1 cost | ~$0.50-1/mo | Free | Free |
-| v1 setup effort | Medium (learn IAM, S3, CloudFront) | One click | One click |
-| v2 cost | ~$1-2/mo | Free tier exists | Free tier (Workers) |
-| v3 cost | LLM tokens + Lambda | LLM tokens + serverless | LLM tokens + Workers |
-| **What you learn** | **Real cloud infrastructure** | Platform abstractions | Edge computing |
+|                    | AWS (S3+CloudFront)                | Vercel/Netlify          | Cloudflare Pages     |
+| ------------------ | ---------------------------------- | ----------------------- | -------------------- |
+| v1 cost            | ~$0.50-1/mo                        | Free                    | Free                 |
+| v1 setup effort    | Medium (learn IAM, S3, CloudFront) | One click               | One click            |
+| v2 cost            | ~$1-2/mo                           | Free tier exists        | Free tier (Workers)  |
+| v3 cost            | LLM tokens + Lambda                | LLM tokens + serverless | LLM tokens + Workers |
+| **What you learn** | **Real cloud infrastructure**      | Platform abstractions   | Edge computing       |
 
 The honest tradeoff: AWS costs slightly more and requires significantly more setup effort. You're paying in time and complexity to learn real infrastructure. Vercel/Netlify gives you free, one-click deploys — but you learn almost nothing about how hosting actually works. The domain (DP-7) is the biggest fixed cost regardless: ~$10-15/year.
 
