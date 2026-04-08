@@ -182,6 +182,8 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "src/components/Header.astro",
+    "src/components/Social.astro",
     "src/components/Footer.astro",
     "src/components/Navigation.astro",
     "src/components",
@@ -194,8 +196,6 @@
     "src/pages/posts/post-2.md",
     "src/pages/posts/post-1.md",
     "src/pages/posts",
-    "src/pages/404.astro",
-    "src/pages/blog.astro",
     "docs/sdlc/SDD.md",
     "public/favicon.svg",
     "node_modules/csso/node_modules/mdn-data/css/readme.md",
