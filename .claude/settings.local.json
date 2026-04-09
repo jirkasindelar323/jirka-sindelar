@@ -12,7 +12,8 @@
       "Bash(mv \"docs/learning/THE_DESTINATION.md\" \"docs/learning/1_TECHNOLOGY_GOD.md\")",
       "Bash(mv \"docs/learning/THE_ACCELERATOR.md\" \"docs/learning/2_AI_ACCELERATION.md\")",
       "Bash(cp /tmp/td_temp.md \"docs/sdlc/Technology Decisions.md\")",
-      "Bash(npm create:*)"
+      "Bash(npm create:*)",
+      "Bash(npx astro:*)"
     ]
   }
 }
