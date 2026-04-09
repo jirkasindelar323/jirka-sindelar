@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<BaseLayout pageTitle="Blog — Jirka Sindelar" description="Blog posts by Jirka Sindelar.">
+  <h1 class="text-3xl font-bold">Blog</h1>
+  <div class="mt-8 grid gap-4">
+    {posts.map((post) => (
+      <BlogCard
+        title={post.data.title}
+        description={post.data.description}
+        date={post.data.date}
+        slug={post.id}
+        tags={post.data.tags}
+      />
+    ))}
+  </div>
+</BaseLayout>

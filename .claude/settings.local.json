@@ -13,7 +13,14 @@
       "Bash(mv \"docs/learning/THE_ACCELERATOR.md\" \"docs/learning/2_AI_ACCELERATION.md\")",
       "Bash(cp /tmp/td_temp.md \"docs/sdlc/Technology Decisions.md\")",
       "Bash(npm create:*)",
-      "Bash(npx astro:*)"
+      "Bash(npx astro:*)",
+      "Bash(ls /c/Workspace/jirka-sindelar/tsconfig.json /c/Workspace/jirka-sindelar/tailwind.config.*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm install:*)",
+      "Bash(npx --no astro build)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/astro/package.json'\\).version\\)\")",
+      "Bash(node -e \"const m = require\\('./node_modules/astro/dist/content/index.js'\\); console.log\\(Object.keys\\(m\\)\\)\")"
     ]
   }
 }

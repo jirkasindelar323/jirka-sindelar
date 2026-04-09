@@ -1,0 +1,34 @@
+---
+interface Props {
+  type?: "website" | "blogPost";
+  title?: string;
+  description?: string;
+  date?: Date;
+}
+
+const { type = "website", title, description, date } = Astro.props;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jirka Sindelar",
+  jobTitle: "Software Engineer",
+  url: "https://jirkasindelar.dev",
+  sameAs: [
+    "https://github.com/jirkasindelar323",
+    "https://www.linkedin.com/in/jiri-sindelar-540a5b143",
+  ],
+};
+
+const blogPostSchema = type === "blogPost" && title ? {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: description,
+  datePublished: date?.toISOString(),
+  author: personSchema,
+} : null;
+
+const schema = blogPostSchema ?? personSchema;
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

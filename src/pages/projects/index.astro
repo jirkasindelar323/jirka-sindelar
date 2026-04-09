@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => {
+    if (a.data.featured && !b.data.featured) return -1;
+    if (!a.data.featured && b.data.featured) return 1;
+    return (a.data.order ?? 99) - (b.data.order ?? 99);
+  });
+---
+<BaseLayout pageTitle="Projects — Jirka Sindelar" description="Projects by Jirka Sindelar.">
+  <h1 class="text-3xl font-bold">Projects</h1>
+  <div class="mt-8 grid gap-4">
+    {projects.map((project) => (
+      <ProjectCard
+        title={project.data.title}
+        description={project.data.description}
+        tags={project.data.tags}
+        sourceUrl={project.data.sourceUrl}
+        liveUrl={project.data.liveUrl}
+      />
+    ))}
+  </div>
+</BaseLayout>

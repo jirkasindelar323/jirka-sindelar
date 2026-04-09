@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/sdlc/Technology Decisions.md",
+                "file": "docs/sdlc/SDD.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Technology Decisions"
+              "title": "SDD"
             }
           }
         ]
@@ -180,19 +180,26 @@
       "bases:Create new base": false
     }
   },
-  "active": "960beaf77173cbd0",
+  "active": "03c2bb00525d47ab",
   "lastOpenFiles": [
-    "src/components/ThemeIcon.astro",
-    "node_modules/react-refresh/babel.js",
-    "node_modules/react-refresh/package.json",
-    "src/components/Greeting.jsx",
-    "node_modules/@babel/code-frame/package.json",
-    "node_modules/jsesc/jsesc.js",
-    "node_modules/jsesc/package.json",
-    "node_modules/@babel/generator/package.json",
-    "node_modules/gensync/index.js",
-    "node_modules/@preact/signals/LICENSE",
-    "node_modules/@preact/signals/src/internal.ts",
+    "dist/index.html",
+    "dist/tags/setbacks/index.html",
+    "dist/tags/successes/index.html",
+    "dist/tags/learning in public/index.html",
+    "dist/tags/community/index.html",
+    "dist/tags/blogging/index.html",
+    "dist/tags/astro/index.html",
+    "dist/tags/setbacks",
+    "dist/tags/successes",
+    "dist/tags/learning in public",
+    "dist/tags/index.html",
+    "dist/favicon.svg",
+    "src/content/projects/personal-site.md",
+    "src/content/blog/fourth-post.md",
+    "src/content/blog/third-post.md",
+    "src/content/blog/second-post.md",
+    "src/content/blog/first-post.md",
+    "docs/sdlc/Technology Decisions.md",
     "node_modules/@preact/signals/README.md",
     "node_modules/@preact/signals/CHANGELOG.md",
     "node_modules/preact/README.md",
@@ -215,12 +222,6 @@
     "node_modules/baseline-browser-mapping/README.md",
     "node_modules/electron-to-chromium/README.md",
     "node_modules/@types/react/README.md",
-    "node_modules/@babel/plugin-transform-react-jsx-self/README.md",
-    "node_modules/react/README.md",
-    "node_modules/@rolldown/pluginutils/README.md",
-    "node_modules/@babel/core/node_modules/semver/README.md",
-    "node_modules/@babel/core/README.md",
-    "node_modules/@babel/helper-compilation-targets/node_modules/semver/README.md",
     "public/favicon.svg",
     "astro-project/public/favicon.svg"
   ]

@@ -1,22 +1,25 @@
 ---
-import Social from './Social.astro';
-
-const githubUsername = "jirkasindelar323";
-const xUsername = "jirka_sindelar";
-const linkedinUsername = "jiri-sindelar-540a5b143";
-const instagramUsername = "jirkasindelar323/";
+const socialLinks = [
+  { platform: "GitHub", href: "https://github.com/jirkasindelar323" },
+  { platform: "LinkedIn", href: "https://www.linkedin.com/in/jiri-sindelar-540a5b143" },
+  { platform: "X", href: "https://x.com/sindelar_jirka" },
+  { platform: "Instagram", href: "https://www.instagram.com/jirkasindelar323/" },
+];
 ---
-<style>
-  footer {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-</style>
-
-<footer>
-  <Social platform="GitHub" username={githubUsername} />
-  <Social platform="X" username={xUsername} />
-  <Social platform="LinkedIn" username={linkedinUsername} />
-  <Social platform="Instagram" username={instagramUsername} />
+<footer class="border-t border-slate-200 dark:border-slate-700 py-8 mt-12">
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
+    <p>&copy; {new Date().getFullYear()} Jirka Sindelar</p>
+    <div class="flex gap-4">
+      {socialLinks.map(({ platform, href }) => (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-indigo-600 dark:hover:text-indigo-400"
+        >
+          {platform}
+        </a>
+      ))}
+    </div>
+  </div>
 </footer>

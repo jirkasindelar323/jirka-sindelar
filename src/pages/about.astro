@@ -1,55 +1,25 @@
 ---
-import '../styles/global.css';
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const pageTitle = "About Me";
-
-const identity = {
-    firstName: "Jiri",
-    lastName: "Sindelar",
-    country: "Australia",
-    occupation: "Software Engineer",
-    hobbies: ["volunteering", "improv", "hiking"],
-};
-
-const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
-const happy = true;
-const finished = true;
-const goal = 3;
-
-const skillColor = "crimson";
-const fontWeight = "bold";
-const textCase = "uppercase";
 ---
-<style define:vars={{ skillColor, fontWeight, textCase }}>
-  .skill {
-    color: var(--skillColor);
-    font-weight: var(--fontWeight);
-    text-transform: var(--textCase);
-  }
-</style>
+<BaseLayout pageTitle="About — Jirka Sindelar" description="About Jirka Sindelar — software engineer, builder, learner.">
+  <h1 class="text-3xl font-bold">About Me</h1>
 
-<BaseLayout pageTitle={pageTitle}>
-            <p>Here are a few facts about me:</p>
-            <ul>
-               <li>My name is {identity.firstName}.</li>
-                <li>I live in {identity.country} and I work as a {identity.occupation}.</li>
-                {identity.hobbies.length >= 2 &&
-                <li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
-            }
-            </ul>
-            <p>My skills are:</p>
-            <ul>
-                {skills.map((skill) => <li class="skill">{skill}</li>)}
-            </ul>
+  <section class="mt-8 space-y-4 text-slate-700 dark:text-slate-300">
+    <p>
+      I'm Jirka Sindelar, a software engineer based in Australia. I come from a Java backend
+      background and I'm now exploring full-stack product development end to end — from
+      idea to deployment.
+    </p>
+    <p>
+      Outside of code, I enjoy volunteering, improv, and hiking.
+    </p>
+  </section>
 
-            {happy && <p>I am happy to be learning Astro!</p>}
-            {finished && <p>I finished this tutorial!</p>}
-            {
-                goal === 3 ? (
-                <p>My goal is to finish in 3 days.</p>
-                ) : (
-                <p>My goal is not 3 days.</p>
-            )}
-
+  <section class="mt-10">
+    <h2 class="text-xl font-semibold">What I'm open to</h2>
+    <p class="mt-3 text-slate-600 dark:text-slate-400">
+      Interesting engineering challenges, collaboration on side projects, and conversations
+      about software, agentic design, and building products.
+    </p>
+  </section>
 </BaseLayout>

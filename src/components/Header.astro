@@ -1,21 +1,61 @@
 ---
-import Menu from './Menu.astro';
-import Navigation from './Navigation.astro';
 import ThemeIcon from './ThemeIcon.astro';
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about/", label: "About" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/blog/", label: "Blog" },
+];
 ---
-<header>
-  <nav>
-    <div>
+<header class="py-6">
+  <nav class="flex items-center justify-between">
+    <a href="/" class="text-lg font-bold tracking-tight hover:text-indigo-600 dark:hover:text-indigo-400">
+      Jirka Sindelar
+    </a>
+    <div class="flex items-center gap-6">
+      <div class="hidden sm:flex gap-4">
+        {navLinks.map(({ href, label }) => (
+          <a
+            href={href}
+            class="text-sm font-medium uppercase tracking-wide text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
+          >
+            {label}
+          </a>
+        ))}
+      </div>
       <ThemeIcon />
-      <Menu />
+      <button
+        id="mobile-menu-btn"
+        class="sm:hidden p-2 text-slate-600 dark:text-slate-300"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
-    <Navigation />
   </nav>
+  <div id="mobile-menu" class="hidden sm:hidden mt-4 flex-col gap-2">
+    {navLinks.map(({ href, label }) => (
+      <a
+        href={href}
+        class="block py-2 text-sm font-medium uppercase tracking-wide text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
+      >
+        {label}
+      </a>
+    ))}
+  </div>
 </header>
 
-<style>
-  div {
-    display: flex;
-    justify-content: space-between;
-  }
-</style>
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    menu?.classList.toggle('hidden');
+    menu?.classList.toggle('flex');
+  });
+</script>
