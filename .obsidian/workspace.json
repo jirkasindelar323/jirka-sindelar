@@ -182,6 +182,7 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "src/pages/tags/index.astro",
     "node_modules/react-dom/client.js",
     "node_modules/react-dom/server.node.js",
     "node_modules/@tailwindcss/oxide-win32-x64-msvc/tailwindcss-oxide.win32-x64-msvc.node",
@@ -192,7 +193,6 @@
     "node_modules/react-dom/cjs/react-dom.production.js",
     "node_modules/react-dom/cjs/react-dom.development.js",
     "node_modules/react-dom/cjs/react-dom-test-utils.production.js",
-    "node_modules/react-dom/cjs/react-dom-test-utils.development.js",
     "node_modules/@astrojs/react/README.md",
     "node_modules/node-releases/README.md",
     "node_modules/@vitejs/plugin-react/README.md",
