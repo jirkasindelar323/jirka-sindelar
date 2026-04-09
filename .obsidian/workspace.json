@@ -182,6 +182,7 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "src/components/ThemeIcon.astro",
     "node_modules/react-refresh/babel.js",
     "node_modules/react-refresh/package.json",
     "src/components/Greeting.jsx",
@@ -192,7 +193,6 @@
     "node_modules/gensync/index.js",
     "node_modules/@preact/signals/LICENSE",
     "node_modules/@preact/signals/src/internal.ts",
-    "node_modules/@preact/signals/src/index.ts",
     "node_modules/@preact/signals/README.md",
     "node_modules/@preact/signals/CHANGELOG.md",
     "node_modules/preact/README.md",
