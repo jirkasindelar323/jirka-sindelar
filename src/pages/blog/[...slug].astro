@@ -6,15 +6,27 @@ export async function getStaticPaths() {
 //fetch all blog posts that are not drafts - CollectionEntry type
   const posts = await getCollection('blog', ({ data }) => !data.draft);
   // Generate paths for each post based on its ID
+  /* slug param must match the file name pattern [...slug].astro, 
+   so we use post.id which is the file name without extension
+  */
   return posts.map((post) => ({
-    params: { slug: post.id },
+params: { slug: post.id },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
 
-// 4. Render the entry to HTML in the template
+/* Compile the raw MD string in post.body:
+{
+  id: 'first-post',
+  collection: 'blog',
+  data: { title: '...', description: '...', date: ..., tags: [...] }, ← already parsed by frontmatter
+  body: 'Welcome to my _new blog_...',                                ← raw markdown string
+  ...
+}
+to <Content /> component
+*/
 const { Content } = await render(post);
 ---
 <BlogPostLayout title={post.data.title} description={post.data.description} date={post.data.date} tags={post.data.tags}>
