@@ -29,6 +29,10 @@ const { title, description, date, tags } = Astro.props;
         </div>
       )}
     </header>
-    <slot />
+  
+    <article class="prose dark:prose-invert max-w-none">
+      <slot />
+    </article>
+
   </article>
 </BaseLayout>

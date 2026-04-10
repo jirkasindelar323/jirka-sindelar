@@ -3,14 +3,14 @@ import { getCollection, render } from 'astro:content';
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
 
 export async function getStaticPaths() {
-//fetch all blog posts that are not drafts - CollectionEntry type
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  //fetch all blog posts that are not drafts - CollectionEntry type
+  const posts = await getCollection('blog', ({ data }) => !data.draft); 
   // Generate paths for each post based on its ID
   /* slug param must match the file name pattern [...slug].astro, 
    so we use post.id which is the file name without extension
   */
   return posts.map((post) => ({
-params: { slug: post.id },
+    params: { slug: post.id },
     props: { post },
   }));
 }
