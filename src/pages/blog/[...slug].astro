@@ -3,7 +3,9 @@ import { getCollection, render } from 'astro:content';
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
 
 export async function getStaticPaths() {
+//fetch all blog posts that are not drafts - CollectionEntry type
   const posts = await getCollection('blog', ({ data }) => !data.draft);
+  // Generate paths for each post based on its ID
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
@@ -11,6 +13,8 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+
+// 4. Render the entry to HTML in the template
 const { Content } = await render(post);
 ---
 <BlogPostLayout title={post.data.title} description={post.data.description} date={post.data.date} tags={post.data.tags}>
