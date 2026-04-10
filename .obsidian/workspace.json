@@ -180,8 +180,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "03c2bb00525d47ab",
+  "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "Clippings/Junior Software Engineer - Java Job in Sydney NSW.md",
+    "docs/sdlc/SDD.md",
+    "Clippings",
     "dist/index.html",
     "dist/tags/setbacks/index.html",
     "dist/tags/successes/index.html",
@@ -191,8 +194,6 @@
     "dist/tags/astro/index.html",
     "dist/tags/setbacks",
     "dist/tags/successes",
-    "dist/tags/learning in public",
-    "dist/tags/index.html",
     "dist/favicon.svg",
     "src/content/projects/personal-site.md",
     "src/content/blog/fourth-post.md",
@@ -221,7 +222,6 @@
     "node_modules/browserslist/README.md",
     "node_modules/baseline-browser-mapping/README.md",
     "node_modules/electron-to-chromium/README.md",
-    "node_modules/@types/react/README.md",
     "public/favicon.svg",
     "astro-project/public/favicon.svg"
   ]

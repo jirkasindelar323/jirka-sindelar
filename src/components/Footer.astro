@@ -10,6 +10,12 @@ const socialLinks = [
   <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
     <p>&copy; {new Date().getFullYear()} Jirka Sindelar</p>
     <div class="flex gap-4">
+      <a
+        href="/jiri-sindelar-cv-short.pdf"
+        class="hover:text-indigo-600 dark:hover:text-indigo-400"
+      >
+        CV
+      </a>
       {socialLinks.map(({ platform, href }) => (
         <a
           href={href}

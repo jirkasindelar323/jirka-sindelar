@@ -20,7 +20,11 @@
       "Bash(npx --no astro build)",
       "Bash(npm run:*)",
       "Bash(node -e \"console.log\\(require\\('./node_modules/astro/package.json'\\).version\\)\")",
-      "Bash(node -e \"const m = require\\('./node_modules/astro/dist/content/index.js'\\); console.log\\(Object.keys\\(m\\)\\)\")"
+      "Bash(node -e \"const m = require\\('./node_modules/astro/dist/content/index.js'\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(node -e \"console.log\\('sharp version:', require\\('sharp/package.json'\\).version\\)\")",
+      "Bash(node -e \"require\\('sharp'\\)\\('public/og-image.png'\\).metadata\\(\\).then\\(m => console.log\\('Source:', m.width + 'x' + m.height, '|', \\(m.size/1024/1024\\).toFixed\\(1\\) + ' MB', '|', m.format\\)\\)\")",
+      "Bash(node -e \"require\\('sharp'\\)\\(String.raw\\\\`C:\\\\Workspace\\\\jirka-sindelar\\\\public\\\\og-image.png\\\\`\\).metadata\\(\\).then\\(m => console.log\\('Source:', m.width + 'x' + m.height, '|', m.format\\)\\)\")",
+      "Bash(node -e \"const sharp = require\\('sharp'\\); sharp\\('public/og-image.jpg'\\).metadata\\(\\).then\\(m => console.log\\('Dimensions:', m.width + 'x' + m.height, '| Format:', m.format\\)\\)\")"
     ]
   }
 }
