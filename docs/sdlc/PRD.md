@@ -4,15 +4,15 @@
 
 **What this document covers.** This PRD translates the business intent captured in [BRD.md](BRD.md) into concrete product behavior for v1 of Jirka Sindelar's personal website. It defines the user stories the site must serve, the functional and non-functional requirements that realize them, the acceptance criteria that prove each story is done, and the dependencies and milestones that sequence the work.
 
-**Product in one line.** A responsive static website that presents Jirka Sindelar's story, work, and writing in a voice that is distinctively his — built to be memorable, credible, and worth returning to.
+**Product in one line.** A responsive static website that presents Jirka Sindelar's story, work, and writing in a voice that is distinctively his — built to catch a visitor's interest the moment they arrive and hold it long enough to leave a real impression.
 
 **Long-term direction.** The site evolves into Jirka's digital avatar — an augmented self that introduces itself to both humans and AI agents, advertises what it can provide, and lets anyone easily connect their agent to learn about Jirka's work, thinking, and interests. v1 serves humans with passively agent-readable structure; v2+ adds active agent capabilities. See [BRD future direction](BRD.md).
 
 **Primary use cases.** Use case #1 is the **main** scenario the site is designed for — the one that shapes every design and content decision. The remaining use cases are valid and supported, but secondary.
 
-1. **Tech-event follow-up (PRIMARY).** Jirka meets a fellow engineer at a conference, meetup, or industry event and either shows them the site directly on his phone or gives them the link to look up later. The visitor — likely on mobile, likely within minutes of a face-to-face conversation — scans the site for 30–60 seconds and walks away with an impression along the lines of *"that's an interesting guy"*. This is the use case that determines whether the site succeeds: it places heavy weight on mobile first-impression, clarity of the landing page, and the personality/humor layer. Every other use case is supported, but if a design trade-off forces a choice, this one wins.
-2. **Evaluate Jirka as a hire.** A recruiter or hiring manager lands on the site (usually via LinkedIn or a shared link), skims the bio and portfolio within a minute, forms a judgment, and either reaches out, downloads the CV to forward internally, or bookmarks the site for later.
-3. **Read Jirka's writing.** A peer engineer, collaborator, or return visitor comes for the blog — either a specific post that was shared with them, or to check what's new since their last visit. This is the retention loop the primary KPI depends on, and it's where a strong first impression from use case #1 converts into a returning reader.
+1. **Tech-event follow-up (PRIMARY).** Jirka meets a fellow engineer at a conference, meetup, or industry event and either shows them the site directly on his phone or gives them the link to look up later. The visitor — likely on mobile, likely within minutes of a face-to-face conversation — opens the site, has their interest caught by the landing page, and keeps reading: scrolling through projects, dipping into a blog post, getting the *"this is an interesting guy"* impression the meetup conversation started. This is the use case that determines whether the site succeeds: it places heavy weight on mobile first-impression, voice, clarity of the landing page, and the personality/humor layer. Every other use case is supported, but if a design trade-off forces a choice, this one wins.
+2. **Recruiter accesses CV and contact info.** A recruiter or hiring manager lands on the site (usually via LinkedIn or a shared link), locates the CV and contact links, and either downloads the CV to forward internally, reaches out, or bookmarks the site for later. They may glance at the bio or portfolio in passing, but no design or content decision optimizes for that path — per the BRD precedence rule, recruiter needs are met by US-1 (CV) and US-9 (rich previews), not by the bio, blog, or homepage copy.
+3. **Read Jirka's writing.** A peer engineer, collaborator, or return visitor comes for the blog — either a specific post that was shared with them, or to check what's new since their last visit. This use case is downstream of use case #1: visitors who got their attention caught the first time come back here, and the writing is what gives them a reason to.
 4. **Get in touch.** Any visitor who wants to contact Jirka finds a clear path to LinkedIn, GitHub, or email within seconds of looking for it.
 5. **Agent discovers Jirka (v2+, not v1).** Someone's personal AI agent — a recruiter's assistant, a collaborator's research agent, a conference organizer's tool — connects to the site, discovers what it can provide ("I can tell you about Jirka's work, his thinking on agentic design, his background, whether he's open to collaboration"), and queries it on behalf of its human. The site responds with structured data and content. In v1, this use case is partially served by structured HTML and JSON-LD (agents can passively read the site). In v2+, the site actively advertises capabilities and exposes dedicated endpoints.
 
@@ -27,19 +27,18 @@ Each story has a `US-n` ID, a primary audience (from the BRD's Target Audiences 
 | **US-1** | Recruiters | As a recruiter or hiring manager, I want to download a PDF CV from the site, so I can forward it to my team or attach it to an internal system. |
 | **US-2** | Both | As a visitor, I want clear, obvious links to LinkedIn, GitHub, and email, so I can reach Jirka without friction. |
 | **US-3** | Both | As a visitor who received a link to a specific blog post, I want to read it with good typography and no distractions, so I can enjoy the content. |
-| **US-4** | Both | As a return visitor, I want to see the newest blog posts and projects on the landing page, so I can quickly tell whether anything is new since my last visit. *(Directly serves the retention KPI, for Tech Industry People checking for new writing and for Recruiters returning when a role opens.)* |
+| **US-4** | Both | As a return visitor, I want to see the newest blog posts and projects on the landing page, so I can quickly tell whether anything is new since my last visit. |
 | **US-5** ⭐ *primary* | Tech Industry People (met at a tech event) | As someone in the tech industry — engineer, PM, PO, founder — who just met Jirka at a conference or meetup, I want to scan his portfolio and personality on my phone within a minute, so I can form a snap judgment that "this is an interesting guy" without digging through long pages. **This is the primary user story** — it owns the primary use case and drives design trade-offs. |
 | **US-6** | Tech Industry People | As a visitor, I want to encounter jokes, games, or hidden surprises as I browse, so the site feels memorable and personal — the humor is what turns a 30-second scan into a lasting impression. |
 | **US-7** | Both | As a visitor arriving on a phone (typically after meeting Jirka at an event, or via a LinkedIn or Slack link), I want the site to work cleanly on mobile, so I don't bounce due to broken layout. |
 | **US-8** | Tech Industry People | As a potential collaborator in the tech industry, I want to understand what kinds of projects interest Jirka, so I know whether a collaboration pitch is worth sending. |
 | **US-9** | Recruiters | As a recruiter, I want to copy a shareable link that renders a good preview when pasted in Slack, LinkedIn, or email, so I can easily pass the site to a hiring manager. |
 | **US-10** | Both | As a visitor, I want to read a narrative bio that goes beyond a resume, so I can get a sense of who Jirka is as a person. |
-| **US-11** | Recruiters | As a recruiter, I want to form a judgment about Jirka's experience and quality of work in under a minute, so I can decide whether to reach out with a role. The site must surface enough signal — current role, seniority, selected work — near the top of the bio and portfolio that I don't have to dig. |
 | **US-12** *(v2+)* | AI Agents | As an AI agent acting on behalf of a human (recruiter, collaborator, researcher), I want to discover what the site can tell me about Jirka and query it in a structured format, so I can efficiently provide my human with relevant information about his work, thinking, and availability. |
 
 **Audience coverage check.** Both BRD audiences have dedicated stories, plus a future agent audience:
 - **Tech Industry People** (primary): US-5 ⭐, US-6, US-8.
-- **Recruiters**: US-1, US-9, US-11.
+- **Recruiters**: US-1, US-9.
 - **Both audiences**: US-2, US-3, US-4, US-7, US-10.
 - **AI Agents** (v2+): US-12. In v1, partially served by NFR-9 (structured markup).
 
@@ -49,15 +48,15 @@ Each `FR-n` describes *what* the site must do. Every FR traces to one or more BR
 
 | ID | Requirement | Serves | BRD in-scope item |
 |---|---|---|---|
-| **FR-1** | The site provides a landing page that presents, at minimum: a short hero introducing Jirka (including current role and seniority signal), entry points to bio/portfolio/blog, and the most recent blog posts and/or projects. | US-4, US-10, US-11 | Bio, Blog, Portfolio |
-| **FR-2** | The site provides a dedicated bio / personal-story page with narrative content going beyond a resume. Key professional signal (current role, years of experience, seniority) is visible near the top so recruiters can evaluate quickly without reading the full narrative. | US-10, US-11 | Bio |
-| **FR-3** | The site provides a portfolio section listing selected projects, each with a short writeup and (where applicable) a link to source or live demo. The top of the portfolio shows selected/highlighted work first so a scanning visitor sees strongest signal immediately. | US-5, US-8, US-11 | Portfolio |
+| **FR-1** | The site provides a landing page that presents, at minimum: a short hero introducing Jirka, entry points to bio/portfolio/blog, and the most recent blog posts and/or projects. | US-4, US-10 | Bio, Blog, Portfolio |
+| **FR-2** | The site provides a dedicated bio / personal-story page with narrative content going beyond a resume. | US-10 | Bio |
+| **FR-3** | The site provides a portfolio section listing selected projects, each with a short writeup and (where applicable) a link to source or live demo. The top of the portfolio shows selected/highlighted work first so a scanning visitor sees strongest signal immediately. | US-5, US-8 | Portfolio |
 | **FR-4** | The site provides a blog section with an index (reverse-chronological) and individual post pages. Posts support headings, code blocks, images, and links. Content includes builder thinking (perspectives on technology, agentic design, the changing craft of software) alongside project writeups — per BRD content scope. | US-3, US-4 | Blog |
 | **FR-5** | The site surfaces contact information on every page (header, footer, or persistent element) with clear links to LinkedIn, GitHub, and email. | US-2 | Contact mechanism |
 | **FR-6** | The site offers a downloadable PDF CV, reachable in at most two clicks from any page. | US-1 | CV / resume download |
 | **FR-7** | The site includes humor, jokes, games, or easter eggs distributed across the experience in ways that do not interfere with serious use (recruiter scan, blog reading). | US-6 | Humor & easter eggs |
 | **FR-8** | The site renders and functions correctly on modern mobile, tablet, and desktop viewports. | US-7 | Responsive / mobile-friendly |
-| **FR-9** | The site collects lightweight analytics sufficient to report the three BRD KPIs: return-visitor ratio, average session duration, and unique visitors per month. Analytics must respect visitor privacy (no third-party ad trackers). | *(non-user-facing; supports BRD KPIs)* | Basic analytics |
+| **FR-9** | The site collects lightweight analytics sufficient to support the quantitative signals listed under "Signals I'll watch" in [BRD.md](BRD.md) — simple engagement and reach checks, not formal KPIs. Analytics must respect visitor privacy (no third-party ad trackers). | *(non-user-facing; supports BRD signals)* | Basic analytics |
 | **FR-10** | Every shareable URL (landing page, blog post, portfolio project) produces a rich social preview (Open Graph / Twitter Card) when pasted into Slack, LinkedIn, or email — with a title, description, and image. | US-9 | *(derived from Recruiter "share" action in BRD audience table)* |
 | **FR-11** | The site communicates what kinds of projects or collaborations Jirka is open to — either on the bio page, the portfolio page, or a dedicated "work with me" section. | US-8 | Bio / Portfolio |
 
@@ -71,7 +70,7 @@ Non-functional requirements describe *how well* the site must behave. They apply
 |---|---|
 | **NFR-1 — Performance** | The site is fast by default: static assets, no heavy third-party scripts, no tracking bloat. No hard numeric budget is committed at v1 (honest for a pre-launch solo project), but the site must feel instant on a modern connection. |
 | **NFR-2 — Accessibility** | The site uses semantic HTML (proper heading hierarchy, landmarks), provides alt text on meaningful images, is fully keyboard navigable, and has visible focus states. No formal WCAG compliance claim is made at v1, but nothing should be actively hostile to assistive tech. |
-| **NFR-3 — Browser support** | The site must render and function on the latest two versions of Chrome, Firefox, Safari, and Edge — explicitly including **mobile Safari** and **Chrome on Android**, since traffic is expected to arrive largely from LinkedIn and similar mobile-heavy referrers. |
+| **NFR-3 — Browser support** | The site must render and function on the latest two versions of Chrome, Firefox, Safari, and Edge — explicitly including **mobile Safari** and **Chrome on Android**, since traffic is expected to arrive largely from in-person meetup referrals (visitor opens the link on their phone within minutes of meeting Jirka) and from LinkedIn or similar mobile-heavy shares. |
 | **NFR-4 — Privacy: no third-party trackers** | The site must not load third-party ad or tracking scripts (Google Analytics ads, Facebook Pixel, etc.). Analytics, if used, must come from a privacy-respecting provider or be self-hosted. |
 | **NFR-5 — Privacy: no cookie banner** | The analytics solution must not require a GDPR cookie consent banner. This means no cookies that require consent, or analytics that work without cookies at all (e.g. Plausible, Simple Analytics, self-hosted). |
 | **NFR-6 — Privacy: no personal data collection** | The site collects no personal data beyond aggregate, anonymized analytics. No forms that store visitor data server-side, no account creation (already out of scope per BRD). |
@@ -130,11 +129,6 @@ Acceptance criteria are grouped by user story ID. Each criterion is an observabl
 - [ ] **AC-10.1** A dedicated bio / personal-story page exists, reachable in one click from the landing page.
 - [ ] **AC-10.2** The bio content is narrative prose — not a bulleted resume dump.
 - [ ] **AC-10.3** The bio reflects Jirka's voice (consistent with the BRD qualitative goal "reflects Jirka's voice & humor").
-
-**US-11 — Recruiter evaluates quickly**
-- [ ] **AC-11.1** The landing page or bio page displays Jirka's current role and a seniority signal (years of experience, titles, or equivalent) above the fold on desktop and within the first screen on mobile.
-- [ ] **AC-11.2** The portfolio surfaces selected/highlighted work first, so a visitor scanning for 60 seconds sees strongest evidence of competence without scrolling through everything.
-- [ ] **AC-11.3** A recruiter unfamiliar with Jirka can answer "what does he do, how senior is he, and is his work any good?" within 60 seconds of landing, without needing to download the CV.
 
 **v1 launch gate.** The site is ready to launch when every AC above is checked, analytics per FR-9 is collecting data, and the site has been smoke-tested on each browser/viewport combination listed in NFR-3.
 
