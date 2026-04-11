@@ -3,18 +3,35 @@
 
 ## Vision
 
-**North star:** Build a personal website that establishes Jirka Sindelar's brand and credibility as a software engineer — a place visitors remember, trust, and want to reconnect with.
+**North star:** Build a personal website that recreates, for the visitor who wasn't at the meetup (or who was, and wants to go deeper), the same experience of meeting Jirka in person — the energy, the projects, the opinions, the questions, the story.
 
-Success means that, after visiting the site, each of the following reactions becomes plausible:
+### How I show up
 
-- *"Recruiter comes to the website and says: 'I want to employ this guy — this is exactly how a software engineer's website should look!'"*
-- *"Employer comes to the website and says: 'I want to hire this guy!'"*
-- *"Software Engineer comes to the website and says: 'I want to work with this guy!'"*
-- *"Anyone comes to the website and says: 'I want to employ him, work with him, or be his friend.'"*
+At tech event I talk with software engineers, product owners, software start-up owners,... and share with people cool stuff I do, where I see interesting technology or ideas. Share my story of my career and life. Share my philosophy, my curiosity - questions, why I choose Melbourne, why I moved from Prague.
+
+> "Hi man, have you heard about open banking, look I do this project"
+>
+> "I was like: I want my website. But what technology to choose today and I found Astro, do you know it. I built website with it, and it's easy to use. Look. Yes I used Claude Code, but didn't let it just build, I noticed that if you want also learn from it, it's better to say to Claude that I want learn and let it do the boring part."
+>
+> "what do you think is the future of software design? What is the role of us there?"
+
+The website is this conversation, frozen in HTML — so the visitor can wander through it the way they would have wandered through the meetup.
+
+### What a successful visit produces
+
+A visit succeeds when one or more of these happen:
+
+- The visitor **remembers** Jirka later — by name, by project, by an idea
+- They **come back** when something new is posted
+- They **mention Jirka** to a friend or colleague ("you should see what this guy is building")
+- They **reach out** — email, LinkedIn, or just a hello at the next event
+- They **follow the blog** or subscribe to whatever follow-mechanism exists
 
 ## Target Audiences
 
-The site is designed for **two audiences**. The **primary success outcome across both is retention** — visitors should want to come back, not just view once. Each audience has a feel (what they should take away emotionally) and a do (the concrete action that signals success).
+The site is designed for **two audiences**. The **primary success outcome across both is caught interest** — the visitor's curiosity gets hooked, they keep reading, and they walk away with a *"this is interesting / remarkable"* reaction. Coming back, sharing, or reaching out are valuable but downstream of this — they only happen if the first visit lands. Each audience has a feel (what they should take away emotionally) and a do (the concrete action that signals success).
+
+**Precedence:** Content, design, and copy decisions are driven by **Tech Industry People** only. Recruiter needs are met by the CV download and contact links — *not* by homepage copy, the bio, or the blog. If a decision creates tension between the two audiences, Tech Industry People win by default.
 
 | Audience | Who they are | Should feel… | Should do… |
 |---|---|---|---|
@@ -28,26 +45,33 @@ The site is designed for **two audiences**. The **primary success outcome across
 - Business Analyst: Jirka Sindelar
 - CTO: Jirka Sindelar
 
-## Executive Summary
+## Quality Goals & Signals
 
-This project builds a personal website for Jirka Sindelar whose purpose is to establish his brand and credibility as a software engineer — a place visitors remember, trust, and want to reconnect with. It serves two audiences: **Tech Industry People** (engineers, PMs, POs, founders, and tech-business folks Jirka meets at conferences, meetups, and industry events — the primary audience) and **Recruiters**. The primary acquisition channel is Jirka attending tech events and either showing the site in person or sharing the link afterward; most first visits happen on mobile within hours of an in-person meeting. Content is a mix of bio, portfolio, long-form writing, and personality-driven humor. Success is measured primarily by retention: return-visitor ratio, average session duration, and unique visitors per month, backed by qualitative goals around voice, memorability, calm design, and visible craft. V1 is a responsive static site with blog, portfolio, contact mechanism, CV download, and basic analytics; user accounts are out of scope for v1, and payments or monetization of any kind are permanently excluded — the site will never carry them. The main risk is over-engineering delaying launch, and the project rests on two assumptions: that traffic will arrive via referral rather than SEO, and that Jirka will continue writing after launch.
-
-## Business Goals & KPIs
-
-### Qualitative Goals
+### Quality Goals
 
 - **Reflects Jirka's voice & humor** — the site should sound unmistakably like its author, not a generic portfolio template.
 - **Memorable & distinctive** — visitors should remember it later; it should stand out from typical engineer portfolios.
 - **Clean & non-distracting** — personality without visual noise; calm, focused, easy to read.
 - **Shows genuine craft** — the site itself is evidence of engineering taste, not just claims about it.
 
-### Measurable KPIs
+### Signals I'll watch
 
-The site's primary business outcome is retention, so KPIs lean toward engagement rather than raw reach. No numeric targets are committed at this stage — baselines will be established after launch.
+This is a personal site, not a product with stakeholders. There are no targets and no "primary KPIs" — quantitative metrics on a low-traffic site are too noisy to drive decisions on their own. What follows is what I'd glance at occasionally to sanity-check whether the site is doing its job.
 
-- **Return-visitor ratio** — % of visitors who come back more than once. *Primary KPI* (direct retention signal).
-- **Average session duration** — how long visitors spend on the site, as a proxy for whether content and humor hold attention.
-- **Unique visitors per month** — top-of-funnel reach; contextualizes the two retention metrics above.
+**Qualitative signals (the ones that actually mean something):**
+
+- Someone comes up to me at a meetup and says *"I read your blog post"* or *"I saw your project on open banking"*
+- I get an unsolicited email or DM from someone I didn't know
+- Someone shares a link to one of my projects or posts
+- When I revisit the site six months from now, *I* still think *"this is interesting"*
+
+**Quantitative signals (sanity checks, not targets):**
+
+- Are people reading past the Hero on the landing page? (engagement check)
+- Is the most recent blog post getting any traffic at all? (writing-reaches-anyone check)
+- Did any visitor land on a deep page (a project or a post) directly from a referral? (validates the meetup-receipt model)
+
+None of these have numbers attached. If something looks off on a glance, it prompts a question — it doesn't trigger an action on its own.
 
 ## In-scope / Out-of-scope
 
@@ -87,6 +111,7 @@ The site's primary business outcome is retention, so KPIs lean toward engagement
 ### Risks
 
 - **Over-engineering delays launch.** The author is an engineer and may keep polishing the code, stack, or design instead of shipping. Mitigation: treat the v1 scope list above as a hard boundary and launch when every in-scope item is functional, even if imperfect.
+- **Pre-filtering by recruiters and ATS is structural and the site cannot fix it.** Cold applications get filtered before anyone clicks through to the site. The site converts *post-curiosity* — the visitor who already met Jirka in person, was pointed at him by someone, or found a blog post via referral. Measuring the site against cold-application outcomes (interview rate, callback rate) will produce false failure signals and risk burnout. Mitigation: judge the site by the retention KPIs above and by qualitative signals from the post-curiosity audience, not by job-application throughput.
 
 ### Assumptions
 
