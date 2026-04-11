@@ -89,7 +89,6 @@ None of these have numbers attached. If something looks off on a glance, it prom
 ### Out of scope (v1)
 
 - **User accounts / login** — no authentication, no profiles; the site is fully public and stateless.
-- **Payments / monetization** — no Stripe, donations, or paid content. This is a permanent exclusion, not a v1 deferral: the site will never carry monetization features. Any future "paid" relationship with Jirka happens outside the website.
 
 ### Future direction (not v1, but informing architectural choices)
 
