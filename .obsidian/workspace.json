@@ -182,6 +182,7 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "CLAUDE.md",
     "Clippings/Junior Software Engineer - Java Job in Sydney NSW.md",
     "docs/sdlc/SDD.md",
     "Clippings",
@@ -221,7 +222,6 @@
     "node_modules/@babel/helpers/README.md",
     "node_modules/browserslist/README.md",
     "node_modules/baseline-browser-mapping/README.md",
-    "node_modules/electron-to-chromium/README.md",
     "public/favicon.svg",
     "astro-project/public/favicon.svg"
   ]
