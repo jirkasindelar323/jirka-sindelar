@@ -8,15 +8,21 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 ---
 <BaseLayout pageTitle="Blog — Jiri Sindelar" description="Blog posts by Jiri Sindelar.">
   <h1 class="text-3xl font-bold">Blog</h1>
-  <div class="mt-8 grid gap-4">
-    {posts.map((post) => (
-      <BlogCard
-        title={post.data.title}
-        description={post.data.description}
-        date={post.data.date}
-        slug={post.id}
-        tags={post.data.tags}
-      />
-    ))}
-  </div>
+  {posts.length > 0 ? (
+    <div class="mt-8 grid gap-4">
+      {posts.map((post) => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          slug={post.id}
+          tags={post.data.tags}
+        />
+      ))}
+    </div>
+  ) : (
+    <p class="mt-8 text-slate-500 dark:text-slate-400">
+      Hopefully I'll add blogs soon.
+    </p>
+  )}
 </BaseLayout>
