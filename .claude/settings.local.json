@@ -24,7 +24,10 @@
       "Bash(node -e \"console.log\\('sharp version:', require\\('sharp/package.json'\\).version\\)\")",
       "Bash(node -e \"require\\('sharp'\\)\\('public/og-image.png'\\).metadata\\(\\).then\\(m => console.log\\('Source:', m.width + 'x' + m.height, '|', \\(m.size/1024/1024\\).toFixed\\(1\\) + ' MB', '|', m.format\\)\\)\")",
       "Bash(node -e \"require\\('sharp'\\)\\(String.raw\\\\`C:\\\\Workspace\\\\jirka-sindelar\\\\public\\\\og-image.png\\\\`\\).metadata\\(\\).then\\(m => console.log\\('Source:', m.width + 'x' + m.height, '|', m.format\\)\\)\")",
-      "Bash(node -e \"const sharp = require\\('sharp'\\); sharp\\('public/og-image.jpg'\\).metadata\\(\\).then\\(m => console.log\\('Dimensions:', m.width + 'x' + m.height, '| Format:', m.format\\)\\)\")"
+      "Bash(node -e \"const sharp = require\\('sharp'\\); sharp\\('public/og-image.jpg'\\).metadata\\(\\).then\\(m => console.log\\('Dimensions:', m.width + 'x' + m.height, '| Format:', m.format\\)\\)\")",
+      "Bash(aws --version)",
+      "Bash(\"/c/Program Files/Amazon/AWSCLIV2/aws\" --version)",
+      "Bash(\"/c/Program Files/Amazon/AWSCLIV2/aws\" sts get-caller-identity)"
     ]
   }
 }

@@ -182,7 +182,6 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
-    "docs/sdlc/M1-progress.md",
     "dist/sitemap-0.xml",
     "dist/sitemap-index.xml",
     "dist/index.html",
@@ -193,10 +192,12 @@
     "dist/projects",
     "dist/blog/index.html",
     "dist/blog",
+    "dist/about/index.html",
     "dist/og-image.jpg",
     "dist/jirka-photo.png",
     "dist/jirka-photo-smaller.png",
     "dist/favicon.svg",
+    "docs/sdlc/M1-progress.md",
     "docs/sdlc/M3-progress.md",
     "public/jirka-photo-smaller.png",
     "public/my-smaller.png",
@@ -226,7 +227,6 @@
     "node_modules/node-releases/README.md",
     "node_modules/@vitejs/plugin-react/README.md",
     "src/pages/posts/post-4.md",
-    "node_modules/caniuse-lite/README.md",
-    "node_modules/csstype/README.md"
+    "node_modules/caniuse-lite/README.md"
   ]
 }
