@@ -2,28 +2,80 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout pageTitle="About — Jirka Sindelar" description="About Jirka Sindelar — software engineer, builder, learner.">
-  <h1 class="text-3xl font-bold">About Me</h1>
 
-  <section class="mt-8 space-y-4 text-slate-700 dark:text-slate-300">
+  <!-- Intro: photo + opener, side by side on desktop -->
+  <section class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
+    <img
+      src="/jirka-photo.png"
+      alt="Jirka Sindelar"
+      class="w-48 h-48 sm:w-56 sm:h-56 rounded-xl object-cover shrink-0"
+    />
+    <div>
+      <h1 class="text-3xl font-bold">Jirka Sindelar</h1>
+      <p class="mt-3 text-lg text-slate-600 dark:text-slate-300">
+        <!-- WRITE: 2-3 sentences, meetup energy opener.
+             Think: what would you say in the first 30 seconds after someone asks
+             "so what do you do?" at a meetup. Not a job title — the energy.
+             e.g. "Deep in flow, building stuff, exploring new ideas emerging in software."
+             Your original line above is a great start — expand it slightly. -->
+        Deep in flow, building stuff, exploring new ideas emerging in software.
+        Lately, I’ve been digging into Open Banking and building an agentic app.
+      </p>
+    </div>
+  </section>
+
+  <!-- The arc: your story, not your resume -->
+  <section class="mt-10 space-y-4 text-slate-700 dark:text-slate-300">
+    <h2 class="text-xl font-semibold">The story</h2>
+    <!-- WRITE: 2-3 paragraphs in your voice. The arc:
+         - Prague banking tech, Java backend, the people who inspired you
+         - What clicked — the moment you wanted more than backend
+         - Melbourne, the shift to full-stack, building end-to-end
+         - What you're chasing now (agentic design, product thinking, the full SDLC)
+         Keep it conversational — "look man, this is what happened" energy. -->
     <p>
-      Deep in flow, building stuff, exploring new ideas emerging in software
+      It was great years in Prague’s banking technology, 
+      working on Java backends and surrounded by brilliant people,
+      who developed staff around the world. So, I recall my quote of my grandpa's shop foreman:
+      “Are you a panel beater? Not yet. Maybe one day. For now, you’re steam rising off a pile of panel beater's shit.”
+      Well, I moved to Melbourne, got sparked to full-stack, 
+      product creation, diving into agentic design.
     </p>
     <p>
-      Beautiful people in Prague banking tech inspired me to broaden my perspective.
-    </p>
-    <p>
-      Based in Melbourne. Looking for opportunities in Australia.
-    </p>
-    <p>
-      Outside of code, I enjoy improv, history, philosophy, volunteering, and nature 
+      Based in Melbourne.
     </p>
   </section>
 
-  <section class="mt-10">
+  <!-- What I'm into now -->
+  <section class="mt-10 space-y-4 text-slate-700 dark:text-slate-300">
+    <h2 class="text-xl font-semibold">What I'm into now</h2>
+    <!-- WRITE: What's on your desk right now. Specific projects, specific obsessions.
+         An engineer reading this should think "oh, I want to talk to him about X."
+         e.g. agentic design, building this site end-to-end, the agent marketplace idea,
+         learning React through Astro islands, etc. -->
+    <p>
+      I build Mortgage readiness copilot which is B2B2C app based on Open banking and agentic design.
+      
+    </p>
+  </section>
+
+  <!-- What I'm open to -->
+  <section class="mt-10 space-y-4 text-slate-700 dark:text-slate-300">
     <h2 class="text-xl font-semibold">What I'm open to</h2>
-    <p class="mt-3 text-slate-600 dark:text-slate-400">
-      Collaboration on interesting projects, and conversations
-      about software, agentic design, and building products.
+    <!-- WRITE: Specific enough that someone can self-qualify.
+         Not "interesting projects" — what KIND of projects? - I don't know
+    -->
+    <p>
+      If you're into Open Banking, agentic design, or product development, let's chat!
     </p>
   </section>
+
+  <!-- Outside of code -->
+  <section class="mt-10 space-y-4 text-slate-700 dark:text-slate-300">
+    <h2 class="text-xl font-semibold">Outside of code</h2>
+    <p>
+      Improv, history, philosophy, volunteering, and nature.
+    </p>
+  </section>
+
 </BaseLayout>

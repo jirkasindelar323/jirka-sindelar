@@ -1,5 +1,5 @@
 ---
-title: "Open banking app"
+title: "Mortgage readiness copilot"
 description: "The idea is to take advantage from Open banking API and agentic design to build B2B2C app"
 tags: ["Java", "Spring", "React"]
 sourceUrl: "https://github.com/jirkasindelar323/mortgage-readiness-copilot"
