@@ -10,7 +10,7 @@ const projects = (await getCollection('projects'))
     return (a.data.order ?? 99) - (b.data.order ?? 99);
   });
 ---
-<BaseLayout pageTitle="Projects — Jirka Sindelar" description="Projects by Jirka Sindelar.">
+<BaseLayout pageTitle="Projects — Jiri Sindelar" description="Projects by Jiri Sindelar.">
   <h1 class="text-3xl font-bold">Projects</h1>
   <div class="mt-8 grid gap-4">
     {projects.map((project) => (

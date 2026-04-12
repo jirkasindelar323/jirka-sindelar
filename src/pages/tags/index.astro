@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const tags = [...new Set(allPosts.flatMap((post) => post.data.tags ?? []))];
 ---
-<BaseLayout pageTitle="Tags — Jirka Sindelar">
+<BaseLayout pageTitle="Tags — Jiri Sindelar">
   <h1 class="text-3xl font-bold">Tags</h1>
   <div class="mt-8 flex flex-wrap gap-3">
     {tags.map((tag) => (
