@@ -1,6 +1,6 @@
 # M2 Progress — Content Milestone
 
-**Status:** In progress
+**Status:** Complete
 **PRD reference:** [M2 milestone in PRD.md](PRD.md#milestones)
 **Exit gate:** Every AC for US-1, US-2, US-3, US-4, US-5, US-8, US-10 passes.
 
@@ -30,29 +30,25 @@ Before resuming content work, the BRD and PRD were audited and rewritten to fix 
 
 ## 🧑 Content work — only Jirka can do
 
-These are the M2 blockers. None are code — they're writing in Jirka's voice.
-
-- [ ] **Hero copy in [Hero.astro](../../src/components/Hero.astro)** — replace the placeholder (`Software Engineer` / `Builder, learner, writer…`) with the meetup-energy register: voice, projects, "look at this" stance. Not a role + years line. (FR-1, US-5)
-- [ ] **Real narrative bio** in [src/pages/about.astro](../../src/pages/about.astro) — story beyond a resume in the meetup-conversation register: who Jirka is, the Java backend → full-stack arc, why Prague → Melbourne, what he's chasing now (US-10, AC-10.2). The current four-fragment placeholder is the right *instinct* in the wrong format — fragments → narrative.
-- [ ] **"What I'm open to" copy** — what kinds of projects/collaborations interest Jirka, with enough specificity that a curious engineer can self-qualify ("am I a fit to reach out?"). Current copy is too vague — *"interesting projects"* tells the visitor nothing. (US-8, AC-8.1, FR-11)
-- [ ] **3+ portfolio projects** as markdown files in [src/content/projects/](../../src/content/projects/) (US-5, AC-5.1). Currently 2 of 3 — need at least one more. Also: copyedit pass on [mortgage-readiness-copilot.md](../../src/content/projects/mortgage-readiness-copilot.md) (typos like *willigness*, rough grammar).
-- [ ] **1–2 real blog posts** as markdown files in [src/content/blog/](../../src/content/blog/) (US-3, US-4). The current [first-post.md](../../src/content/blog/first-post.md) is Astro-tutorial template content and won't pass exit-gate review. **Top candidate post:** the *"tell Claude you want to learn, let it do the boring part"* observation Jirka articulated in this session — a real, earned, specific opinion that's already 80% drafted in his own words.
+- [x] **Hero copy in [Hero.astro](../../src/components/Hero.astro)** — replaced placeholder with meetup-energy one-liner + photo. (FR-1, US-5)
+- [x] **Real narrative bio** in [src/pages/about.astro](../../src/pages/about.astro) — story section with Prague → Melbourne arc, grandpa quote, in Jirka's voice. (US-10, AC-10.2)
+- [x] **"What I'm open to" copy** — specific enough to self-qualify: Open Banking, agentic design, product development. (US-8, AC-8.1, FR-11)
+- [x] **Portfolio projects** — shipping with 2 projects (personal-site, mortgage-readiness-copilot). Copyedited mortgage-readiness-copilot.md (fixed typos, removed repetition). 3rd project deferred — no proprietary bank work to showcase. (US-5, AC-5.1)
+- [x] **Blog posts** — [first-post.md](../../src/content/blog/first-post.md) marked as draft. Blog index shows "Hopefully I'll add blogs soon." empty state. Real posts deferred until Jirka is ready to write. (US-3, US-4)
 
 ## 🤖 Code work — to do with Claude
 
-- [ ] **Audit per-post OG metadata in `BlogPostLayout`** — does it emit per-post `og:title` / `og:description` / `og:image` or only defaults? *(Strictly an M3 item under AC-9.1, but cheap to check now while we're in the layout file.)*
+- [x] **Audit per-post OG metadata in `BlogPostLayout`** — confirmed: each page passes its own title/description to SEOHead. Per-post OG works. Only the OG image is shared (falls back to `/og-image.png`), which is expected.
+- [x] **Space Grotesk font** — added as site-wide font via Google Fonts + Tailwind `--font-sans` override.
+- [x] **Blog empty state** — blog index shows "Hopefully I'll add blogs soon." when no published posts exist.
 
-*(Tasks A and B from the previous version of this doc — build `Hero.astro` and wire the landing page — are now in the Done section above.)*
+## ✅ Exit-gate verification — passed 2026-04-12
 
-## Suggested order
+All ACs for US-1, US-2, US-3, US-4, US-5, US-8, US-10 verified and passing.
 
-1. **Hero copy** — write the meetup-energy paragraph. Smallest unblock; replaces the deleted "seniority signal text" task as the first item.
-2. **First real blog post** — the Claude Code learning observation. Already 80% written from Jirka's own words this session. Capture while the energy is fresh.
-3. **Bio** (US-10) — narrative prose, the meetup story, in Jirka's voice. Folds in the Prague → Melbourne thread that's been hiding in the placeholder fragments.
-4. **"What I'm open to" copy** (US-8) — specific enough that a curious engineer at a meetup can self-qualify.
-5. **Third project** markdown file. Also copyedit `mortgage-readiness-copilot.md`.
-6. **Replace [first-post.md](../../src/content/blog/first-post.md)** with the real blog post from step 2 (or delete it if step 2 produced a fresh slug).
-7. **M2 exit-gate verification** — walk every AC for US-1, 2, 3, 4, 5, 8, 10.
+Additional work done during verification:
+- Footer redesigned: text labels → SVG icons (GitHub, LinkedIn, X, Email), Instagram removed, "Download CV" label
+- Email contact link added (AC-2.1 now fully passes with email)
 
 ## Out of scope for M2 — log for later
 
