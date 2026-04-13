@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getEntry } from 'astro:content';
+
+const copilot = await getEntry('projects', 'mortgage-readiness-copilot');
 ---
 <BaseLayout pageTitle="About — Jiri Sindelar" description="About Jiri Sindelar — software engineer, builder, learner.">
 
@@ -54,9 +58,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="mt-10 space-y-4 text-slate-700 dark:text-slate-300">
     <h2 class="text-xl font-semibold">What I'm into now</h2>
     <p>
-      I'm building a Mortgage readiness copilot which is a B2B2C app based 
-      on Open banking and agentic design that makes it user friendly.
+      Here's what I'm exploring right now — came out of an idea that mortgage 
+      assessment is still user unfriendly, if you have multiple accounts it's time-spending and annoying activity, 
+      the Open Banking gives the access to client's financial data and AI agents can make it easier:
     </p>
+    {copilot && (
+      <ProjectCard
+        slug={copilot.id}
+        title={copilot.data.title}
+        description={copilot.data.description}
+        tags={copilot.data.tags}
+        sourceUrl={copilot.data.sourceUrl}
+        liveUrl={copilot.data.liveUrl}
+      />
+    )}
   </section>
 
   <section class="mt-10 space-y-4 text-slate-700 dark:text-slate-300">
