@@ -1,5 +1,8 @@
 ---
+import GitHubIcon from './icons/GitHubIcon.astro';
+
 interface Props {
+  slug: string;
   title: string;
   description: string;
   tags: string[];
@@ -7,10 +10,12 @@ interface Props {
   liveUrl?: string;
 }
 
-const { title, description, tags, sourceUrl, liveUrl } = Astro.props;
+const { slug, title, description, tags, sourceUrl, liveUrl } = Astro.props;
 ---
 <article class="rounded-lg border border-slate-200 dark:border-slate-700 p-5">
-  <h3 class="text-lg font-semibold">{title}</h3>
+  <h3 class="text-lg font-semibold">
+    <a href={`/projects/${slug}`} class="hover:text-indigo-600 dark:hover:text-indigo-400">{title}</a>
+  </h3>
   <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{description}</p>
   <div class="mt-3 flex flex-wrap gap-2">
     {tags.map((tag) => (
@@ -22,8 +27,14 @@ const { title, description, tags, sourceUrl, liveUrl } = Astro.props;
   {(sourceUrl || liveUrl) && (
     <div class="mt-4 flex gap-4 text-sm">
       {sourceUrl && (
-        <a href={sourceUrl} target="_blank" rel="noopener noreferrer" class="text-indigo-600 dark:text-indigo-400 hover:underline">
-          Source
+        <a
+          href={sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
+        >
+          <GitHubIcon class="w-4 h-4" />
+          <span>Source repo</span>
         </a>
       )}
       {liveUrl && (

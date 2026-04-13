@@ -29,6 +29,7 @@ const projects = (await getCollection('projects'))
       <div class="grid gap-4">
         {projects.map((project) => (
           <ProjectCard
+            slug={project.id}
             title={project.data.title}
             description={project.data.description}
             tags={project.data.tags}

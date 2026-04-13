@@ -1,0 +1,55 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GitHubIcon from '../../components/icons/GitHubIcon.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, description, tags, sourceUrl, liveUrl } = project.data;
+---
+<BaseLayout pageTitle={`${title} — Jiri Sindelar`} description={description}>
+  <article class="prose prose-slate dark:prose-invert max-w-none">
+    <header class="not-prose mb-8">
+      <h1 class="text-3xl font-bold">{title}</h1>
+      {tags && tags.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span class="text-xs px-2 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+      {(sourceUrl || liveUrl) && (
+        <div class="mt-4 flex gap-4 text-sm">
+          {sourceUrl && (
+            <a
+              href={sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
+            >
+              <GitHubIcon class="w-4 h-4" />
+              <span>Source repo</span>
+            </a>
+          )}
+          {liveUrl && (
+            <a href={liveUrl} target="_blank" rel="noopener noreferrer" class="text-indigo-600 dark:text-indigo-400 hover:underline">
+              Live
+            </a>
+          )}
+        </div>
+      )}
+    </header>
+
+    <Content />
+  </article>
+</BaseLayout>
