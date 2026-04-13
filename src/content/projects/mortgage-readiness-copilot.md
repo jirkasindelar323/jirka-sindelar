@@ -2,7 +2,6 @@
 title: "Mortgage readiness copilot"
 description: "B2B2C app using Open Banking API and agentic design to assess mortgage readiness"
 tags: ["Java", "Spring", "React"]
-sourceUrl: "https://github.com/jirkasindelar323/mortgage-readiness-copilot"
 featured: true
 order: 2
 ---
