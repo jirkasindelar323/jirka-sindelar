@@ -11,14 +11,10 @@
             "id": "960beaf77173cbd0",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Clippings/Peter Steinberger.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Peter Steinberger"
+              "title": "New tab"
             }
           }
         ]
@@ -182,6 +178,7 @@
   },
   "active": "960beaf77173cbd0",
   "lastOpenFiles": [
+    "CV template.pdf",
     "dist/sitemap-0.xml",
     "dist/sitemap-index.xml",
     "dist/index.html",
@@ -192,7 +189,6 @@
     "dist/projects",
     "dist/blog/index.html",
     "dist/blog",
-    "dist/about/index.html",
     "dist/og-image.jpg",
     "dist/jirka-photo.png",
     "dist/jirka-photo-smaller.png",
